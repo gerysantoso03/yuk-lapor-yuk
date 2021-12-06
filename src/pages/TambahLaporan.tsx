@@ -153,7 +153,7 @@ const TambahLaporan = () => {
                       <IonCol className="width-sm">
                         <IonButton
                           onClick={() => {
-                            // GetGeolocation();
+                            GetGeolocation();
                           }}
                           className="location-btn"
                           color="warning"

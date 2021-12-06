@@ -46,7 +46,7 @@ const Register = () => {
         address,
         isAdmin,
       });
-      h.push('/login');
+      h.replace('/login');
     } catch (error) {
       console.log(error);
     }

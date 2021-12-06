@@ -5,10 +5,9 @@ import {
   IonTabButton,
   IonIcon,
   IonFabButton,
-  useIonActionSheet,
 } from '@ionic/react';
-import { add, homeOutline, list, person, document, home } from 'ionicons/icons';
-import { Redirect, useHistory } from 'react-router';
+import { add, person, home } from 'ionicons/icons';
+import { Redirect } from 'react-router';
 import { useContext } from 'react';
 
 // Import Page
@@ -24,8 +23,6 @@ import { AppContext } from '../../context/AppContext';
 
 const UserNavigation = () => {
   const { userIsAdmin } = useContext(AppContext);
-  const [present, dismiss] = useIonActionSheet();
-  const history = useHistory();
 
   return (
     <IonTabs>
