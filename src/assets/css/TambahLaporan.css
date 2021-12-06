@@ -1,0 +1,54 @@
+.width-50 {
+  width: 100% !important;
+}
+
+.button-ylw {
+  color: white !important;
+}
+
+.form-input {
+  width: 100%;
+  padding: 5px 0 !important;
+}
+
+.no-margin {
+  margin: 16px 0;
+}
+
+.location-btn {
+  position: absolute;
+  right: 0;
+  width: 30% !important;
+  --box-shadow: 1px 3px 15px 0.001px #88888834;
+}
+
+.width-sm {
+  width: 30% !important;
+}
+
+.tambah-card__image {
+  box-shadow: 1px 3px 15px 0.001px #88888834;
+}
+
+.tambah-wrapper__button {
+  padding: 0 .6rem;
+  margin-bottom: 2rem;
+}
+
+.tambah__button {
+  --box-shadow: 1px 3px 15px 0.001px #88888834;
+  font-size: 1.2rem;
+}
+
+.tambah-input__card {
+  width: 100%;
+  box-shadow: 1px 3px 15px 0.001px #88888834;
+}
+
+.tambah__container {
+  padding-bottom: 5rem;
+}
+
+.tambah__btn-action {
+  --box-shadow: 1px 3px 15px 0.001px #88888834;
+}

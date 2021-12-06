@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "ionic-yuk-lapor",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

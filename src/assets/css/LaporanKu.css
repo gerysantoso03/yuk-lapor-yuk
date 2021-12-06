@@ -1,0 +1,35 @@
+.porku {
+  --ion-background-color: #f7f8fb;
+}
+
+.dilaporkan {
+  position: absolute;
+  border-radius: 5px;
+  background-color: #ffb700;
+  padding: 10px;
+  align-items: flex-end;
+  right: 0;
+  margin: 5px;
+}
+
+.porku-content__container {
+  display: flex;
+}
+
+.porku-content__container .porku__icon {
+  /* border: 1px solid magenta; */
+  flex: 1;
+  max-width: 30px;
+  padding-top: .5rem;
+  margin-left: -1rem;
+}
+
+.porku-content__container .porku__address {
+  /* border: 1px solid magenta; */
+  flex: 1;
+}
+
+.porku__card {
+  margin-bottom: 2.5rem;
+  box-shadow: 1px 3px 15px 0.001px #88888834;
+}

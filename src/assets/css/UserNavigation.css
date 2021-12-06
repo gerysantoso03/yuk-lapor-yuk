@@ -1,0 +1,9 @@
+.nav-bottom {
+	margin: 0 !important;
+	border-radius: 1.6rem 1.6rem 0 0;
+}
+.nav-bottom__add {
+	--background: white;
+	--color: var(--clr-purple);
+	--box-shadow: none;
+}

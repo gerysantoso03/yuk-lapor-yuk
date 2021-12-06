@@ -1,0 +1,79 @@
+.home {
+  --ion-background-color: #f7f8fb;
+}
+
+.dilaporkan {
+  position: absolute;
+  border-radius: 5px;
+  background-color: #ffb700;
+  padding: 10px;
+  align-items: flex-end;
+  right: 0;
+  margin: 5px;
+}
+
+.home-content__container {
+  display: flex;
+}
+
+.home-content__container .home__icon {
+  /* border: 1px solid magenta; */
+  flex: 1;
+  max-width: 30px;
+  padding-top: .5rem;
+  margin-left: -1rem;
+}
+
+.home-content__container .home__address {
+  /* border: 1px solid magenta; */
+  flex: 1;
+}
+
+.home__card {
+  box-shadow: 1px 3px 15px 0.001px #88888834;
+  margin-bottom: 2.5rem;
+}
+
+.pop {
+  padding: 1.5rem;
+}
+
+.popover-content {
+  --width: 300px;
+}
+
+.pop__title {
+  font-size: 2rem;
+  padding: 0;
+  margin: 0;
+}
+
+.pop__container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pop__button {
+  padding: 0;
+  margin: 0;
+  --background: none !important;
+  --width: 100%;
+  border: 1px solid var(--clr-purple);
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  color: var(--clr-purple) !important;
+  padding: 0;
+}
+
+.pop__button--active {
+  --background: var(--clr-purple) !important;
+  color: white !important;
+}
+/* 
+.pop__button:focus-within,
+.pop__button:focus,
+.pop__button:focus-visible,
+.pop__button:active {
+  color: red !important;
+} */

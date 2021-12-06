@@ -1,0 +1,53 @@
+ion-title {
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+ion-label {
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.splash-screen {
+  --ion-background-color: #6352ff;
+  position: relative;
+}
+
+.splash-screen-logo {
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.splash-screen-button {
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-screen-footer {
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-bubble {
+  width: 40rem;
+  height: 40rem;
+  position: absolute;
+  background-image: linear-gradient(
+    90deg,
+    rgba(166, 163, 255, 0.3),
+    rgba(255, 255, 255, 0.1)
+  );
+  /* background-color: rgba(166, 163, 255, 0.5); */
+  border-radius: 50%;
+  top: -23rem;
+  right: -13rem;
+}

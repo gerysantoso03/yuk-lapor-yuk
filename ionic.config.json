@@ -1,0 +1,7 @@
+{
+  "name": "ionic-yuk-lapor",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
