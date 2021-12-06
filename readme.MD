@@ -14,7 +14,7 @@ This application is built with :
 # How to Use
 
 - Clone the repository with `git clone https://github.com/gerysantoso03/yuk-lapor.git`.
-- If you have npm version > npm@5.7, run `npm ci` when install all dependencies both locally and in your deployment pipeline, else run `npm install`.
+- Run `npm install` to install all the dependencies.
 - After all dependencies installed, run `ionic serve` to start the application.
 
 # Contributors
