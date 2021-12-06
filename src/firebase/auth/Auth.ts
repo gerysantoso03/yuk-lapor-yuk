@@ -40,8 +40,7 @@ export const registerUser = async ({
     const res = await createUserWithEmailAndPassword(auth, email, password);
 
     if (res) {
-      const db = getFirestore();
-      const data = await setDoc(doc(db, 'users', res.user.uid), {
+      const data = await setDoc(doc(db(), 'users', res.user.uid), {
         userId: res.user.uid,
         fullname: fullname,
         address: address,
