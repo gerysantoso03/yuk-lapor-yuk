@@ -276,6 +276,3 @@ const TambahLaporan = () => {
 };
 
 export default TambahLaporan;
-function getUserLaporanData(uid: string | undefined) {
-  throw new Error('Function not implemented.');
-}
