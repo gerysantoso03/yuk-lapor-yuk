@@ -13,12 +13,12 @@ import {
   IonText,
   IonButtons,
   IonBackButton,
+  useIonToast,
 } from '@ionic/react';
 import { map } from 'ionicons/icons';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { registerUser } from '../firebase/auth/Auth';
-import { registerType } from '../types/AuthTypes';
 
 // Import Styles
 import '../assets/css/Register.css';
@@ -31,26 +31,7 @@ const Register = () => {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const h = useHistory();
 
-  const register = async ({
-    email,
-    password,
-    fullname,
-    address,
-    isAdmin,
-  }: Omit<registerType, 'userId'>) => {
-    try {
-      const res = await registerUser({
-        email,
-        password,
-        fullname,
-        address,
-        isAdmin,
-      });
-      h.replace('/login');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [present, dismiss] = useIonToast();
 
   return (
     <IonPage className="register">
@@ -59,7 +40,7 @@ const Register = () => {
         <IonHeader className="ion-no-border ion-padding-horizontal login__header">
           <IonToolbar color="clear">
             <IonButtons slot="start">
-              <IonBackButton/>
+              <IonBackButton />
             </IonButtons>
           </IonToolbar>
         </IonHeader>
@@ -124,8 +105,23 @@ const Register = () => {
               <IonButton
                 color="warning"
                 className="button__register"
-                onClick={() => {
-                  register({ email, password, fullname, address, isAdmin });
+                onClick={async () => {
+                  try {
+                    // Regist new user data
+                    await registerUser({
+                      email,
+                      password,
+                      fullname,
+                      address,
+                      isAdmin,
+                    });
+
+                    present('Success to regist new user', 2000);
+
+                    h.replace('login');
+                  } catch (error) {
+                    present('Failed to regist new user', 2000);
+                  }
                 }}
               >
                 <IonLabel className="button-label">Register</IonLabel>

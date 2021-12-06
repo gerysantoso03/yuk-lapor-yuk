@@ -47,6 +47,8 @@ export const registerUser = async ({
         isAdmin: isAdmin,
       });
 
+      console.log(data);
+
       return data;
     }
   } catch (error) {
