@@ -145,17 +145,13 @@ const Home = ({ laporan = [] }: { laporan: laporanType[] }) => {
                   <IonCardHeader>
                     <IonCardTitle>{laporanData.title}</IonCardTitle>
                     <IonCardSubtitle>
-                      Tingkat Kerusakan : {laporanData.desc}
+                      Tingkat Kerusakan : {laporanData.damageRate}
                     </IonCardSubtitle>
                   </IonCardHeader>
 
                   <IonCardContent className="home-content__container">
                     <IonIcon icon={location} className="home__icon" />
-                    <p className="home__address">
-                      {/* Jl. Persahabatan RayaRT.006/RW.003, Perwira, Kec. Bekasi
-                      Utara, Kota Bks, Jawa Barat 17143 */}
-                      {laporanData.loc}
-                    </p>
+                    <p className="home__address">{laporanData.loc}</p>
                   </IonCardContent>
                 </IonCard>
               </IonCol>
