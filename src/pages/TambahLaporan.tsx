@@ -41,7 +41,7 @@ const TambahLaporan = () => {
     'Ringan'
   );
   const [present, dismiss] = useIonToast();
-  const { user, userIsAdmin } = useContext(AppContext);
+  const { user, userIsAdmin, setLaporan } = useContext(AppContext);
   const history = useHistory();
 
   const GetGeolocation = async () => {
@@ -203,7 +203,9 @@ const TambahLaporan = () => {
                   try {
                     // Validate data
                     if (title === '' || desc === '' || loc === '') {
-                      throw new Error('Input data must not be empty!!');
+                      throw new Error(
+                        'Title, Desc, or location must not be empty !!'
+                      );
                     }
 
                     if (!user) {
@@ -224,6 +226,9 @@ const TambahLaporan = () => {
                     // Fetch new updated data
                     const laporan = await getUserLaporan(user.uid);
 
+                    // Set new laporan data to context
+                    setLaporan(laporan);
+
                     // Set form back to initial value
                     setTitle('');
                     setDesc('');
@@ -231,15 +236,12 @@ const TambahLaporan = () => {
                     setDamageRate('Ringan');
 
                     // Set success toast
-                    present('Success add new laporan data', 2000);
+                    present('Success to add new laporan data', 2000);
 
-                    // Return back to homepage
-                    history.replace({
-                      pathname: '/user/home',
-                      state: { laporan },
-                    });
+                    // Return back to laporanku page
+                    history.replace('/user/laporanku');
                   } catch {
-                    present('Failed to add new laporan data', 2000);
+                    present('Failed to add new laporan data !!', 2000);
                   }
                 }}
                 className="width-50 button-ylw tambah__btn-action"

@@ -50,7 +50,7 @@ const DetailLaporan = () => {
     'Observasi' | 'Perbaiki' | 'Selesai'
   >('Observasi');
 
-  const { userIsAdmin } = useContext(AppContext);
+  const { userIsAdmin, setLaporan } = useContext(AppContext);
   const { laporanId } = useParams<LaporanParams>();
   const [detailLaporan, setDetailLaporan] = useState<laporanType>();
   const [correspondUser, setCorrespondUser] = useState<userType>();
@@ -184,10 +184,11 @@ const DetailLaporan = () => {
                         // Fetch new updated laporan data from database
                         const laporan = await getAllLaporan();
 
-                        history.replace({
-                          pathname: '/user/home',
-                          state: { laporan },
-                        });
+                        // Set laporan data into laporan context
+                        setLaporan(laporan);
+
+                        // Back to home page
+                        history.replace('/user/home');
 
                         // Give success toast
                         present('Success to update laporan data', 2000);

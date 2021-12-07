@@ -21,8 +21,26 @@ import {
 import '../assets/css/LaporanKu.css';
 import Jalan from '../assets/images/Jalan.jpeg';
 import { location } from 'ionicons/icons';
+import { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../context/AppContext';
+import { getUserLaporan } from '../firebase/laporan/Laporan';
+import { laporanType } from '../types/LaporanTypes';
+import { useHistory } from 'react-router';
 
 const LaporanKu = () => {
+  const { user, laporan } = useContext(AppContext);
+  const [userLaporan, setUserLaporan] = useState<laporanType[]>(laporan);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (user) {
+      getUserLaporan(user.uid).then((res) =>
+        setUserLaporan(res as laporanType[])
+      );
+    }
+  }, [user, laporan]);
+
   return (
     <IonPage className="porku">
       <IonHeader className="ion-no-border">
@@ -40,59 +58,28 @@ const LaporanKu = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <IonCard className="porku__card">
-                <IonLabel className="dilaporkan">DILAPORKAN</IonLabel>
-                <IonImg src={Jalan} />
-                <IonCardHeader>
-                  <IonCardTitle>Jalan Berlubang</IonCardTitle>
-                  <IonCardSubtitle>
-                    Tingkat Kerusakan : Rusak Parah
-                  </IonCardSubtitle>
-                </IonCardHeader>
-                <IonCardContent className="porku-content__container">
-                  <IonIcon icon={location} className="porku__icon" />
-                  <p className="porku__address">
-                    Jl. Persahabatan RayaRT.006/RW.003, Perwira, Kec. Bekasi
-                    Utara, Kota Bks, Jawa Barat 17143
-                  </p>
-                </IonCardContent>
-              </IonCard>
-
-              <IonCard className="porku__card">
-                <IonLabel className="dilaporkan">DILAPORKAN</IonLabel>
-                <IonImg src={Jalan} />
-                <IonCardHeader>
-                  <IonCardTitle>Jalan Berlubang</IonCardTitle>
-                  <IonCardSubtitle>
-                    Tingkat Kerusakan : Rusak Parah
-                  </IonCardSubtitle>
-                </IonCardHeader>
-                <IonCardContent className="porku-content__container">
-                  <IonIcon icon={location} className="porku__icon" />
-                  <p className="porku__address">
-                    Jl. Persahabatan RayaRT.006/RW.003, Perwira, Kec. Bekasi
-                    Utara, Kota Bks, Jawa Barat 17143
-                  </p>
-                </IonCardContent>
-              </IonCard>
-
-              <IonCard className="porku__card">
-                <IonLabel className="dilaporkan">DILAPORKAN</IonLabel>
-                <IonImg src={Jalan} />
-                <IonCardHeader>
-                  <IonCardTitle>Jalan Berlubang</IonCardTitle>
-                  <IonCardSubtitle>
-                    Tingkat Kerusakan : Rusak Parah
-                  </IonCardSubtitle>
-                </IonCardHeader>
-                <IonCardContent className="porku-content__container">
-                  <IonIcon icon={location} className="porku__icon" />
-                  <p className="porku__address">
-                    Jl. Persahabatan RayaRT.006/RW.003, Perwira, Kec. Bekasi
-                    Utara, Kota Bks, Jawa Barat 17143
-                  </p>
-                </IonCardContent>
-              </IonCard>
+              {userLaporan.map((laporan) => (
+                <IonCard
+                  className="porku__card"
+                  key={laporan.id}
+                  onClick={() => {
+                    history.push(`/user/laporanku/${laporan.id}`);
+                  }}
+                >
+                  <IonLabel className="dilaporkan">DILAPORKAN</IonLabel>
+                  <IonImg src={Jalan} />
+                  <IonCardHeader>
+                    <IonCardTitle>{laporan.title}</IonCardTitle>
+                    <IonCardSubtitle>
+                      Tingkat Kerusakan : {laporan.damageRate}
+                    </IonCardSubtitle>
+                  </IonCardHeader>
+                  <IonCardContent className="porku-content__container">
+                    <IonIcon icon={location} className="porku__icon" />
+                    <p className="porku__address">{laporan.loc}</p>
+                  </IonCardContent>
+                </IonCard>
+              ))}
             </IonCol>
           </IonRow>
         </IonGrid>

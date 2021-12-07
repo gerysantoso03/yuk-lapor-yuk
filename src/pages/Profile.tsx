@@ -64,7 +64,12 @@ const Profile = () => {
                     icon={newspaper}
                     className="button__orange-icon"
                   />
-                  <IonLabel className="button__orange-label">
+                  <IonLabel
+                    onClick={() => {
+                      history.replace('/user/laporanku');
+                    }}
+                    className="button__orange-label"
+                  >
                     Lihat Laporan Saya
                   </IonLabel>
                 </IonButton>

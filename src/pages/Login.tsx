@@ -12,11 +12,11 @@ import {
   IonRow,
   IonText,
   IonToolbar,
+  useIonToast,
 } from '@ionic/react';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { loginUser } from '../firebase/auth/Auth';
-import { loginType } from '../types/AuthTypes';
 
 // Import Assets
 import '../assets/css/Login.css';
@@ -24,16 +24,9 @@ import '../assets/css/Login.css';
 const Login = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const history = useHistory();
 
-  const login = async ({ email, password }: loginType) => {
-    try {
-      const res = await loginUser({ email, password });
-      history.push('/user/home');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const history = useHistory();
+  const [present, dismiss] = useIonToast();
 
   return (
     <IonPage className="login">
@@ -83,8 +76,24 @@ const Login = () => {
           <IonRow>
             <IonCol className="login-button">
               <IonButton
-                onClick={() => {
-                  login({ email, password });
+                onClick={async () => {
+                  try {
+                    // Login to firebase authentication
+                    await loginUser({ email, password });
+
+                    // Set success toast
+                    present('Login success !!', 2000);
+
+                    // Set form back to initial value
+                    setEmail('');
+                    setPassword('');
+
+                    // Back to home page
+                    history.replace('/user/home');
+                  } catch (error) {
+                    // Set failed toast
+                    present('Login success !!', 2000);
+                  }
                 }}
                 color="warning"
                 className="button__login"

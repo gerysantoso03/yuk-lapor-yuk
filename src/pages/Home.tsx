@@ -71,10 +71,10 @@ const PopoverList = () => {
     </IonList>
   );
 };
-
-const Home = ({ laporan = [] }: { laporan: laporanType[] }) => {
-  const [userLaporan, setUserLaporan] = useState<laporanType[]>(laporan);
-  const { user, userIsAdmin } = useContext(AppContext);
+// { laporan = [] }: { laporan: laporanType[] }
+const Home = () => {
+  const [userLaporan, setUserLaporan] = useState<laporanType[]>([]);
+  const { user, userIsAdmin, laporan } = useContext(AppContext);
   const history = useHistory();
 
   const [present, dismiss] = useIonPopover(PopoverList, {
@@ -82,11 +82,7 @@ const Home = ({ laporan = [] }: { laporan: laporanType[] }) => {
   });
 
   useEffect(() => {
-    if (user && !userIsAdmin) {
-      getUserLaporan(user.uid).then((res) => setUserLaporan(res));
-    } else {
-      getAllLaporan().then((res) => setUserLaporan(res));
-    }
+    getAllLaporan().then((res) => setUserLaporan(res));
   }, [user, laporan]);
 
   return (
@@ -94,7 +90,7 @@ const Home = ({ laporan = [] }: { laporan: laporanType[] }) => {
       <IonHeader className="ion-no-border">
         <IonToolbar>
           <IonTitle className="title-toolbar__head ion-text-center">
-            {userIsAdmin ? 'Beranda' : 'Laporanku'}
+            Beranda
           </IonTitle>
         </IonToolbar>
         {userIsAdmin && (
