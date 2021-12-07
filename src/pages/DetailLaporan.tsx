@@ -20,6 +20,7 @@ import {
   IonRadio,
   IonRadioGroup,
   useIonToast,
+  IonModal
 } from '@ionic/react';
 
 // Import Assets
@@ -49,7 +50,7 @@ const DetailLaporan = () => {
   const [observation, setObservation] = useState<
     'Observasi' | 'Perbaiki' | 'Selesai'
   >('Observasi');
-
+  const [showModal, setShowModal] = useState(false);
   const { userIsAdmin, setLaporan } = useContext(AppContext);
   const { laporanId } = useParams<LaporanParams>();
   const [detailLaporan, setDetailLaporan] = useState<laporanType>();
@@ -83,6 +84,32 @@ const DetailLaporan = () => {
       </IonHeader>
 
       <IonContent fullscreen class="ion-padding-horizontal">
+        <IonModal isOpen={showModal} cssClass='detail__modal'>
+          <IonItem lines="none">
+            <IonCol>
+              <IonLabel>Status TKP</IonLabel>
+              <IonRadioGroup
+                value={observation}
+                onIonChange={(e: any) => setObservation(e.detail.value)}
+              >
+                <IonItem lines="none">
+                  <IonLabel>Tahap Observasi</IonLabel>
+                  <IonRadio slot="start" value="Observasi"></IonRadio>
+                </IonItem>
+                <IonItem lines="none">
+                  <IonLabel>Tahap Perbaiki</IonLabel>
+                  <IonRadio slot="start" value="Perbaiki"></IonRadio>
+                </IonItem>
+                <IonItem lines="none">
+                  <IonLabel>Selesai Diperbaiki</IonLabel>
+                  <IonRadio slot="start" value="Selesai"></IonRadio>
+                </IonItem>
+              </IonRadioGroup>
+            </IonCol>
+          </IonItem>
+          <IonButton onClick={() => setShowModal(false)}>Selesai</IonButton>
+        </IonModal>
+        
         <IonCard className="detail__card-container">
           <IonLabel className="dilaporkan">DILAPORKAN</IonLabel>
           <IonImg className="report-image" src={Placeholder1} />
@@ -146,28 +173,13 @@ const DetailLaporan = () => {
             <IonGrid className="ion-padding-horizontal">
               <IonRow>
                 <IonCol>
-                  <IonItem lines="none">
-                    <IonCol>
-                      <IonLabel>Status TKP</IonLabel>
-                      <IonRadioGroup
-                        value={observation}
-                        onIonChange={(e: any) => setObservation(e.detail.value)}
-                      >
-                        <IonItem lines="none">
-                          <IonLabel>Tahap Observasi</IonLabel>
-                          <IonRadio slot="start" value="Observasi"></IonRadio>
-                        </IonItem>
-                        <IonItem lines="none">
-                          <IonLabel>Tahap Perbaiki</IonLabel>
-                          <IonRadio slot="start" value="Perbaiki"></IonRadio>
-                        </IonItem>
-                        <IonItem lines="none">
-                          <IonLabel>Selesai Diperbaiki</IonLabel>
-                          <IonRadio slot="start" value="Selesai"></IonRadio>
-                        </IonItem>
-                      </IonRadioGroup>
-                    </IonCol>
-                  </IonItem>
+                  <IonButton
+                    className="edit-btn"
+                    color="warning"
+                    onClick={() => setShowModal(true)}
+                  >
+                    Ubah Status
+                  </IonButton>
                 </IonCol>
               </IonRow>
               <IonRow>
@@ -196,10 +208,10 @@ const DetailLaporan = () => {
                         present('Failed to update laporan data', 2000);
                       }
                     }}
-                    className="edit-btn"
-                    color="warning"
+                    className="edit-btn button__background-purple"
+                    color="primary"
                   >
-                    Ubah Status
+                    Konfirmasi
                   </IonButton>
                 </IonCol>
               </IonRow>
