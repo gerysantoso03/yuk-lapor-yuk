@@ -56,6 +56,20 @@ const Profile = () => {
           </IonRow>
 
           <IonRow>
+            <IonCol size="12" className="ion-text-center">
+              <IonButton
+                fill="outline"
+                color="dark"
+                onClick={() => {
+                  history.push('/user/editprofile');
+                }}
+              >
+                <IonLabel>Edit Profile</IonLabel>
+              </IonButton>
+            </IonCol>
+          </IonRow>
+
+          <IonRow>
             {!userIsAdmin && (
               <IonCol size="12" className="col__button">
                 <IonButton color="warning" className="button__orange">
