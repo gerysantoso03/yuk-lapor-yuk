@@ -6,6 +6,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import SplashScreen from './pages/SplashScreen';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Credits from './pages/Credits';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -43,6 +44,7 @@ const App: React.FC = () => {
             <Route exact path="/splash-screen" component={SplashScreen} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/credits" component={Credits} />
             <Redirect exact from="/" to="/splash-screen" />
           </IonRouterOutlet>
         </IonReactRouter>

@@ -97,3 +97,11 @@
 .pop__button:active {
   color: red !important;
 } */
+
+.pop__reset {
+  display: flex;
+}
+
+.pop__button-reset {
+  font-size: 1rem;
+}
