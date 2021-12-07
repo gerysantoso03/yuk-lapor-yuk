@@ -4,4 +4,5 @@ export type userType = {
   fullname: string;
   address: string;
   isAdmin: boolean;
+  urlImage: string;
 };
