@@ -5,10 +5,12 @@ import {
   IonTabButton,
   IonIcon,
   IonFabButton,
+  useIonActionSheet,
 } from '@ionic/react';
-import { add, person, home } from 'ionicons/icons';
-import { Redirect } from 'react-router';
+import { add, person, home, homeOutline, list, document } from 'ionicons/icons';
+import { Redirect, useHistory } from 'react-router';
 import { useContext } from 'react';
+import { AppContext } from '../../context/AppContext';
 
 // Import Page
 import DetailLaporan from '../../pages/DetailLaporan';
@@ -19,10 +21,12 @@ import TambahLaporan from '../../pages/TambahLaporan';
 import ProtectedRoute from '../auth/ProtectedRoute';
 
 import '../../assets/css/UserNavigation.css';
-import { AppContext } from '../../context/AppContext';
 
 const UserNavigation = () => {
   const { userIsAdmin } = useContext(AppContext);
+
+  const history = useHistory();
+  const [present, dismiss] = useIonActionSheet();
 
   return (
     <IonTabs>
@@ -42,23 +46,57 @@ const UserNavigation = () => {
         />
         <Redirect exact from="/user" to="/user/home" />
       </IonRouterOutlet>
-      <IonTabBar slot="bottom" className="nav-bottom">
-        <IonTabButton tab="schedule" href="/user/home">
-          <IonIcon color="light" icon={home} />
-        </IonTabButton>
+      {userIsAdmin ? (
+        <IonTabBar slot="bottom" className="nav-bottom">
+          <IonTabButton tab="home" href="/user/home">
+            <IonIcon color="light" icon={home} />
+          </IonTabButton>
 
-        {!userIsAdmin ? (
+          <IonTabButton tab="profile" href="/user/profile">
+            <IonIcon color="light" icon={person} />
+          </IonTabButton>
+        </IonTabBar>
+      ) : (
+        <IonTabBar slot="bottom" className="nav-bottom">
+          <IonTabButton tab="list">
+            <IonIcon
+              onClick={() => {
+                present({
+                  header: 'Daftar Menu',
+                  buttons: [
+                    {
+                      text: 'Beranda',
+                      icon: homeOutline,
+                      handler: () => {
+                        history.replace('/user/home');
+                      },
+                    },
+                    {
+                      text: 'Laporan Saya',
+                      icon: document,
+                      handler: () => {
+                        history.replace('/user/laporanku');
+                      },
+                    },
+                  ],
+                });
+              }}
+              color="light"
+              icon={list}
+            />
+          </IonTabButton>
+
           <IonTabButton tab="add" href="/user/tambah-laporan">
             <IonFabButton size="small" className="nav-bottom__add">
               <IonIcon icon={add} />
             </IonFabButton>
           </IonTabButton>
-        ) : null}
 
-        <IonTabButton tab="profile" href="/user/profile">
-          <IonIcon color="light" icon={person} />
-        </IonTabButton>
-      </IonTabBar>
+          <IonTabButton tab="profile" href="/user/profile">
+            <IonIcon color="light" icon={person} />
+          </IonTabButton>
+        </IonTabBar>
+      )}
     </IonTabs>
   );
 };
