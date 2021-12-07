@@ -19,7 +19,7 @@ import {
   IonToolbar,
   IonItem,
   IonList,
-  useIonPopover,
+  useIonPopover
 } from '@ionic/react';
 import '../assets/css/Home.css';
 import Jalan from '../assets/images/Jalan.jpeg';
@@ -31,25 +31,64 @@ import { AppContext } from '../context/AppContext';
 import { getAllLaporan, getUserLaporan } from '../firebase/laporan/Laporan';
 
 const PopoverList = () => {
+  const [tingRus, setTingRus] = useState(0);
+  const [statTKP, setStatTKP] = useState(0); 
+  
+  const resetButton = () => {
+    setTingRus(0)
+    setStatTKP(0)
+  }
+
+  const toggleTingRus = (index: number) => {
+    setTingRus(index);
+  };
+
+  const toggleStatTKP = (index: number) => {
+    setStatTKP(index);
+  };
+
   return (
     <IonList className="pop">
       <div className="pop__reset">
         <IonTitle className="pop__title">Filter</IonTitle>
-        <IonButton className="pop__button-reset">Reset</IonButton>
+        <IonButton className="pop__button-reset" onClick={resetButton}>Reset</IonButton>
       </div>
       <p>Tingkat Kerusakan</p>
       <div className="pop__container">
         <IonItem
           button
           lines="none"
-          className="pop__button pop__button--active"
+          className={
+            tingRus === 1 ? 'pop__button pop__button--active' : 'pop__button'
+          }
+          onClick={() => {
+            toggleTingRus(1);
+          }}
         >
           Rusak Ringan
         </IonItem>
-        <IonItem button lines="none" className="pop__button">
+        <IonItem
+          button
+          lines="none"
+          className={
+            tingRus === 2 ? 'pop__button pop__button--active' : 'pop__button'
+          }
+          onClick={() => {
+            toggleTingRus(2);
+          }}
+        >
           Rusak Sedang
         </IonItem>
-        <IonItem button lines="none" className="pop__button">
+        <IonItem
+          button
+          lines="none"
+          className={
+            tingRus === 3 ? 'pop__button pop__button--active' : 'pop__button'
+          }
+          onClick={() => {
+            toggleTingRus(3);
+          }}
+        >
           Rusak Parah
         </IonItem>
       </div>
@@ -59,14 +98,37 @@ const PopoverList = () => {
         <IonItem
           button
           lines="none"
-          className="pop__button pop__button--active"
+          className={
+            statTKP === 1 ? 'pop__button pop__button--active' : 'pop__button'
+          }
+          onClick={() => {
+            toggleStatTKP(1);
+          }}
         >
           Tahap Observasi
         </IonItem>
-        <IonItem button lines="none" className="pop__button">
+        <IonItem
+          button
+          lines="none"
+          className={
+            statTKP === 2 ? 'pop__button pop__button--active' : 'pop__button'
+          }
+          onClick={() => {
+            toggleStatTKP(2);
+          }}
+        >
           Tahap Perbaiki
         </IonItem>
-        <IonItem button lines="none" className="pop__button">
+        <IonItem
+          button
+          lines="none"
+          className={
+            statTKP === 3 ? 'pop__button pop__button--active' : 'pop__button'
+          }
+          onClick={() => {
+            toggleStatTKP(3);
+          }}
+        >
           Selesai Diperbaiki
         </IonItem>
       </div>
@@ -80,11 +142,11 @@ const Home = () => {
   const history = useHistory();
 
   const [present, dismiss] = useIonPopover(PopoverList, {
-    onHide: () => dismiss(),
+    onHide: () => dismiss()
   });
 
   useEffect(() => {
-    getAllLaporan().then((res) => setUserLaporan(res));
+    getAllLaporan().then(res => setUserLaporan(res));
   }, [user, laporan]);
 
   return (
@@ -107,9 +169,9 @@ const Home = () => {
                       fill="outline"
                       shape="round"
                       className="button__orange"
-                      onClick={(e) =>
+                      onClick={e =>
                         present({
-                          event: e.nativeEvent,
+                          event: e.nativeEvent
                         })
                       }
                     >
@@ -128,7 +190,7 @@ const Home = () => {
 
       <IonContent fullscreen>
         <IonGrid>
-          {userLaporan.map((laporanData) => (
+          {userLaporan.map(laporanData => (
             <IonRow
               key={laporanData.id}
               onClick={() => {
