@@ -97,11 +97,13 @@ const Register = () => {
                   <IonIcon icon={map} />
                 </IonButton>
               </div>
-              <IonButton fill="clear">
+              <IonButton
+                expand="block"
+                className="button__upload"
+                // color="primary"
+              >
                 <IonIcon slot="start" icon={camera} />
-                <IonLabel className="insert-photo">
-                  Insert Profile Picture
-                </IonLabel>
+                <IonLabel>Insert Profile Picture</IonLabel>
               </IonButton>
             </IonCol>
           </IonRow>

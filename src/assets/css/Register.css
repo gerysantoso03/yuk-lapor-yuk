@@ -87,6 +87,18 @@
   --box-shadow: 1px 3px 15px 0.001px #88888834;
 }
 
+.button__upload {
+  margin: 2rem 0;
+  width: 100% !important;
+  --padding-top: 2rem;
+  --padding-bottom: 2rem;
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  --border-radius: 5px !important;
+  --box-shadow: 1px 3px 15px 0.001px #88888834;
+  --background: #6352ff;
+}
+
 .register__link {
   color: var(--clr-black);
 }

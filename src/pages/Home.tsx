@@ -136,13 +136,13 @@ const Home = () => {
               <IonCol>
                 <IonCard className="home__card">
                   {/* Dilaporkan */}
-                  <IonLabel className="dilaporkan">DILAPORKAN</IonLabel>
+                  {/* <IonLabel className="dilaporkan">DILAPORKAN</IonLabel> */}
 
                   {/* Perbaikan */}
                   {/* <IonLabel className="perbaikan">DALAM PERBAIKAN</IonLabel> */}
 
                   {/* Selesai */}
-                  {/* <IonLabel className="selesai">SELESAI</IonLabel> */}
+                  <IonLabel className="selesai">SELESAI</IonLabel>
                   <IonImg src={Jalan} />
 
                   <IonCardHeader>
