@@ -24,13 +24,30 @@ import {
 import '../assets/css/Home.css';
 import Jalan from '../assets/images/Jalan.jpeg';
 import { location, options } from 'ionicons/icons';
-import { useContext, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { laporanType } from '../types/LaporanTypes';
 import { useHistory } from 'react-router';
 import { AppContext } from '../context/AppContext';
-import { getAllLaporan, getUserLaporan } from '../firebase/laporan/Laporan';
+import { getAllLaporan } from '../firebase/laporan/Laporan';
 
-const PopoverList = () => {
+type kerusakanType = 'Ringan' | 'Sedang' | 'Berat' | null;
+type observasiType = 'Observasi' | 'Perbaiki' | 'Selesai' | null;
+
+const PopoverList = ({
+  setKerusakan,
+  setObservasi,
+}: {
+  setObservasi: Dispatch<SetStateAction<observasiType>>;
+  setKerusakan: Dispatch<SetStateAction<kerusakanType>>;
+}) => {
+  // const [classname, setClassname] = useState(null);
+
   return (
     <IonList className="pop">
       <IonTitle className="pop__title">Filter</IonTitle>
@@ -40,14 +57,31 @@ const PopoverList = () => {
         <IonItem
           button
           lines="none"
+          onClick={() => {
+            setKerusakan('Ringan');
+          }}
           className="pop__button pop__button--active"
         >
           Rusak Ringan
         </IonItem>
-        <IonItem button lines="none" className="pop__button">
+        <IonItem
+          onClick={() => {
+            setKerusakan('Sedang');
+          }}
+          button
+          lines="none"
+          className="pop__button"
+        >
           Rusak Sedang
         </IonItem>
-        <IonItem button lines="none" className="pop__button">
+        <IonItem
+          onClick={() => {
+            setKerusakan('Berat');
+          }}
+          button
+          lines="none"
+          className="pop__button"
+        >
           Rusak Parah
         </IonItem>
       </div>
@@ -57,29 +91,58 @@ const PopoverList = () => {
         <IonItem
           button
           lines="none"
+          onClick={() => {
+            setObservasi('Observasi');
+          }}
           className="pop__button pop__button--active"
         >
           Tahap Observasi
         </IonItem>
-        <IonItem button lines="none" className="pop__button">
+        <IonItem
+          onClick={() => {
+            setObservasi('Perbaiki');
+          }}
+          button
+          lines="none"
+          className="pop__button"
+        >
           Tahap Perbaiki
         </IonItem>
-        <IonItem button lines="none" className="pop__button">
+        <IonItem
+          onClick={() => {
+            setObservasi('Selesai');
+          }}
+          button
+          lines="none"
+          className="pop__button"
+        >
           Selesai Diperbaiki
         </IonItem>
       </div>
     </IonList>
   );
 };
-// { laporan = [] }: { laporan: laporanType[] }
+
 const Home = () => {
   const [userLaporan, setUserLaporan] = useState<laporanType[]>([]);
+
+  const [kerusakan, setKerusakan] = useState<kerusakanType>(
+    null as kerusakanType
+  );
+
+  const [observasi, setObservasi] = useState<observasiType>(
+    null as observasiType
+  );
+
   const { user, userIsAdmin, laporan } = useContext(AppContext);
   const history = useHistory();
 
-  const [present, dismiss] = useIonPopover(PopoverList, {
-    onHide: () => dismiss(),
-  });
+  const [present, dismiss] = useIonPopover(
+    <PopoverList setObservasi={setObservasi} setKerusakan={setKerusakan} />,
+    {
+      onHide: () => dismiss(),
+    }
+  );
 
   useEffect(() => {
     getAllLaporan().then((res) => setUserLaporan(res));
@@ -126,40 +189,89 @@ const Home = () => {
 
       <IonContent fullscreen>
         <IonGrid>
-          {userLaporan.map((laporanData) => (
-            <IonRow
-              key={laporanData.id}
-              onClick={() => {
-                history.push(`/user/laporanku/${laporanData.id}`);
-              }}
-            >
-              <IonCol>
-                <IonCard className="home__card">
-                  {/* Dilaporkan */}
-                  {/* <IonLabel className="dilaporkan">DILAPORKAN</IonLabel> */}
+          {(kerusakan || observasi) &&
+            userLaporan
+              .filter(
+                (fil) =>
+                  fil.damageRate === kerusakan &&
+                  fil.observationStatus === observasi
+              )
+              .map((laporanData) => (
+                <IonRow
+                  key={laporanData.id}
+                  onClick={() => {
+                    history.push(`/user/laporanku/${laporanData.id}`);
+                  }}
+                >
+                  <IonCol>
+                    <IonCard className="home__card">
+                      {laporanData.observationStatus === 'Observasi' ? (
+                        <IonLabel className="dilaporkan">
+                          Tahap Observasi
+                        </IonLabel>
+                      ) : laporanData.observationStatus === 'Perbaiki' ? (
+                        <IonLabel className="perbaikan">
+                          Tahap Perbaikan
+                        </IonLabel>
+                      ) : (
+                        <IonLabel className="selesai">
+                          Selesai Perbaikan
+                        </IonLabel>
+                      )}
+                      <IonImg src={Jalan} />
 
-                  {/* Perbaikan */}
-                  {/* <IonLabel className="perbaikan">DALAM PERBAIKAN</IonLabel> */}
+                      <IonCardHeader>
+                        <IonCardTitle>{laporanData.title}</IonCardTitle>
+                        <IonCardSubtitle>
+                          Tingkat Kerusakan : {laporanData.damageRate}
+                        </IonCardSubtitle>
+                      </IonCardHeader>
 
-                  {/* Selesai */}
-                  <IonLabel className="selesai">SELESAI</IonLabel>
-                  <IonImg src={Jalan} />
+                      <IonCardContent className="home-content__container">
+                        <IonIcon icon={location} className="home__icon" />
+                        <p className="home__address">{laporanData.loc}</p>
+                      </IonCardContent>
+                    </IonCard>
+                  </IonCol>
+                </IonRow>
+              ))}
 
-                  <IonCardHeader>
-                    <IonCardTitle>{laporanData.title}</IonCardTitle>
-                    <IonCardSubtitle>
-                      Tingkat Kerusakan : {laporanData.damageRate}
-                    </IonCardSubtitle>
-                  </IonCardHeader>
+          {kerusakan === null &&
+            userLaporan.map((laporanData) => (
+              <IonRow
+                key={laporanData.id}
+                onClick={() => {
+                  history.push(`/user/laporanku/${laporanData.id}`);
+                }}
+              >
+                <IonCol>
+                  <IonCard className="home__card">
+                    {laporanData.observationStatus === 'Observasi' ? (
+                      <IonLabel className="dilaporkan">
+                        Tahap Observasi
+                      </IonLabel>
+                    ) : laporanData.observationStatus === 'Perbaiki' ? (
+                      <IonLabel className="perbaikan">Tahap Perbaikan</IonLabel>
+                    ) : (
+                      <IonLabel className="selesai">Selesai Perbaikan</IonLabel>
+                    )}
+                    <IonImg src={Jalan} />
 
-                  <IonCardContent className="home-content__container">
-                    <IonIcon icon={location} className="home__icon" />
-                    <p className="home__address">{laporanData.loc}</p>
-                  </IonCardContent>
-                </IonCard>
-              </IonCol>
-            </IonRow>
-          ))}
+                    <IonCardHeader>
+                      <IonCardTitle>{laporanData.title}</IonCardTitle>
+                      <IonCardSubtitle>
+                        Tingkat Kerusakan : {laporanData.damageRate}
+                      </IonCardSubtitle>
+                    </IonCardHeader>
+
+                    <IonCardContent className="home-content__container">
+                      <IonIcon icon={location} className="home__icon" />
+                      <p className="home__address">{laporanData.loc}</p>
+                    </IonCardContent>
+                  </IonCard>
+                </IonCol>
+              </IonRow>
+            ))}
         </IonGrid>
       </IonContent>
     </IonPage>
