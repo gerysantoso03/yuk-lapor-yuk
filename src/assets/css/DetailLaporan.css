@@ -107,3 +107,21 @@
   /* border: 1px solid magenta; */
   flex: 1;
 }
+
+.button__background-purple {
+  --background:  var(--ion-color-warning);
+}
+
+/* DOES NOT WORK - not specific enough */
+.modal-wrapper {
+  background: #222;
+}
+
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+.detail__modal .modal-wrapper {
+  padding: 2rem;
+}
+
+.detail__modal .ion-page {
+  padding: 2rem;
+}

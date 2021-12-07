@@ -66,7 +66,13 @@ const LaporanKu = () => {
                     history.push(`/user/laporanku/${laporan.id}`);
                   }}
                 >
-                  <IonLabel className="dilaporkan">DILAPORKAN</IonLabel>
+                  {laporan.observationStatus === 'Observasi' ? (
+                    <IonLabel className="dilaporkan">Tahap Observasi</IonLabel>
+                  ) : laporan.observationStatus === 'Perbaiki' ? (
+                    <IonLabel className="perbaikan">Tahap Perbaikan</IonLabel>
+                  ) : (
+                    <IonLabel className="selesai">Selesai Perbaikan</IonLabel>
+                  )}
                   <IonImg src={Jalan} />
                   <IonCardHeader>
                     <IonCardTitle>{laporan.title}</IonCardTitle>

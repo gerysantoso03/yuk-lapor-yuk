@@ -19,6 +19,7 @@ import LaporanKu from '../../pages/LaporanKu';
 import Profile from '../../pages/Profile';
 import TambahLaporan from '../../pages/TambahLaporan';
 import ProtectedRoute from '../auth/ProtectedRoute';
+import EditProfile from '../../pages/EditProfile';
 
 import '../../assets/css/UserNavigation.css';
 
@@ -39,6 +40,11 @@ const UserNavigation = () => {
           component={DetailLaporan}
         />
         <ProtectedRoute exact path="/user/profile" component={Profile} />
+        <ProtectedRoute
+          exact
+          path="/user/editprofile"
+          component={EditProfile}
+        />
         <ProtectedRoute
           exact
           path="/user/tambah-laporan"

@@ -12,7 +12,7 @@ import {
   IonTitle,
   IonAvatar,
 } from '@ionic/react';
-import { exit, map, newspaper } from 'ionicons/icons';
+import { exit, map, newspaper, pencil } from 'ionicons/icons';
 import { useContext } from 'react';
 import { logout } from '../firebase/auth/Auth';
 import { useHistory } from 'react-router';
@@ -52,6 +52,25 @@ const Profile = () => {
               <p>
                 <IonIcon icon={map} /> {userData?.address}
               </p>
+            </IonCol>
+          </IonRow>
+
+          <IonRow>
+            <IonCol size="12" className="col__button">
+              <IonButton
+                className="button__orange"
+                color="warning"
+                onClick={() => {
+                  history.push('/user/editprofile');
+                }}
+              >
+                <IonIcon
+                  slot="icon-only"
+                  icon={pencil}
+                  className="button__orange-icon"
+                />
+                <IonLabel>Edit Profile</IonLabel>
+              </IonButton>
             </IonCol>
           </IonRow>
 
