@@ -33,8 +33,10 @@ import { getAllLaporan, getUserLaporan } from '../firebase/laporan/Laporan';
 const PopoverList = () => {
   return (
     <IonList className="pop">
-      <IonTitle className="pop__title">Filter</IonTitle>
-
+      <div className="pop__reset">
+        <IonTitle className="pop__title">Filter</IonTitle>
+        <IonButton className="pop__button-reset">Reset</IonButton>
+      </div>
       <p>Tingkat Kerusakan</p>
       <div className="pop__container">
         <IonItem
