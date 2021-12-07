@@ -50,6 +50,18 @@ const SplashScreen = () => {
               </IonButton>
             </IonCol>
           </IonRow>
+          <IonRow>
+            <IonCol className="ion-text-center">
+              <IonButton
+                color="secondary"
+                routerLink="/credits"
+                className="button__splash"
+                fill="outline"
+              >
+                <IonLabel className="button-label">Credits</IonLabel>
+              </IonButton>
+            </IonCol>
+          </IonRow>
         </IonGrid>
         <IonGrid className="splash-screen-footer">
           <IonRow>

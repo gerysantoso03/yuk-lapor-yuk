@@ -46,41 +46,68 @@ const PopoverList = ({
   setObservasi: Dispatch<SetStateAction<observasiType>>;
   setKerusakan: Dispatch<SetStateAction<kerusakanType>>;
 }) => {
-  // const [classname, setClassname] = useState(null);
+  const [tingRus, setTingRus] = useState(0);
+  const [statTKP, setStatTKP] = useState(0);
+
+  const resetButton = () => {
+    setTingRus(0);
+    setStatTKP(0);
+  };
+
+  const toggleTingRus = (index: number) => {
+    setTingRus(index);
+  };
+
+  const toggleStatTKP = (index: number) => {
+    setStatTKP(index);
+  };
 
   return (
     <IonList className="pop">
-      <IonTitle className="pop__title">Filter</IonTitle>
-
+      <div className="pop__reset">
+        <IonTitle className="pop__title">Filter</IonTitle>
+        <IonButton className="pop__button-reset" onClick={resetButton}>
+          Reset
+        </IonButton>
+      </div>
       <p>Tingkat Kerusakan</p>
       <div className="pop__container">
         <IonItem
           button
           lines="none"
+          className={
+            tingRus === 1 ? 'pop__button pop__button--active' : 'pop__button'
+          }
           onClick={() => {
+            toggleTingRus(1);
             setKerusakan('Ringan');
           }}
-          className="pop__button pop__button--active"
         >
           Rusak Ringan
         </IonItem>
         <IonItem
-          onClick={() => {
-            setKerusakan('Sedang');
-          }}
           button
           lines="none"
-          className="pop__button"
+          className={
+            tingRus === 2 ? 'pop__button pop__button--active' : 'pop__button'
+          }
+          onClick={() => {
+            toggleTingRus(2);
+            setKerusakan('Sedang');
+          }}
         >
           Rusak Sedang
         </IonItem>
         <IonItem
-          onClick={() => {
-            setKerusakan('Berat');
-          }}
           button
           lines="none"
-          className="pop__button"
+          className={
+            tingRus === 3 ? 'pop__button pop__button--active' : 'pop__button'
+          }
+          onClick={() => {
+            toggleTingRus(3);
+            setKerusakan('Berat');
+          }}
         >
           Rusak Parah
         </IonItem>
@@ -91,30 +118,39 @@ const PopoverList = ({
         <IonItem
           button
           lines="none"
+          className={
+            statTKP === 1 ? 'pop__button pop__button--active' : 'pop__button'
+          }
           onClick={() => {
+            toggleStatTKP(1);
             setObservasi('Observasi');
           }}
-          className="pop__button pop__button--active"
         >
           Tahap Observasi
         </IonItem>
         <IonItem
-          onClick={() => {
-            setObservasi('Perbaiki');
-          }}
           button
           lines="none"
-          className="pop__button"
+          className={
+            statTKP === 2 ? 'pop__button pop__button--active' : 'pop__button'
+          }
+          onClick={() => {
+            toggleStatTKP(2);
+            setObservasi('Perbaiki');
+          }}
         >
           Tahap Perbaiki
         </IonItem>
         <IonItem
-          onClick={() => {
-            setObservasi('Selesai');
-          }}
           button
           lines="none"
-          className="pop__button"
+          className={
+            statTKP === 3 ? 'pop__button pop__button--active' : 'pop__button'
+          }
+          onClick={() => {
+            toggleStatTKP(3);
+            setObservasi('Selesai');
+          }}
         >
           Selesai Diperbaiki
         </IonItem>
