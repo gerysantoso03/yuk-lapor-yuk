@@ -41,7 +41,15 @@ const LaporanKu = () => {
           <IonRow>
             <IonCol>
               <IonCard className="porku__card">
+                {/* Dilaporkan */}
                 <IonLabel className="dilaporkan">DILAPORKAN</IonLabel>
+
+                {/* Dalam Perbaikan */}
+                {/* <IonLabel className="perbaikan">DALAM PERBAIKAN</IonLabel> */}
+
+                {/* Selesai */}
+                {/* <IonLabel className="selesai">SELESAI</IonLabel> */}
+
                 <IonImg src={Jalan} />
                 <IonCardHeader>
                   <IonCardTitle>Jalan Berlubang</IonCardTitle>
