@@ -1,0 +1,12 @@
+.profile-edit {
+  border: 1px;
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 1px 3px 15px 0.001px #88888834;
+  margin-bottom: 2rem;
+  --padding-top: 2rem;
+  --padding-bottom: 2rem;
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  --color: var(--clr-black);
+}

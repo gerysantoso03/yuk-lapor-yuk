@@ -15,7 +15,7 @@ import {
   IonBackButton,
   useIonToast,
 } from '@ionic/react';
-import { map } from 'ionicons/icons';
+import { camera, map } from 'ionicons/icons';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { registerUser } from '../firebase/auth/Auth';
@@ -97,6 +97,14 @@ const Register = () => {
                   <IonIcon icon={map} />
                 </IonButton>
               </div>
+              <IonButton
+                expand="block"
+                className="button__upload"
+                // color="primary"
+              >
+                <IonIcon slot="start" icon={camera} />
+                <IonLabel>Insert Profile Picture</IonLabel>
+              </IonButton>
             </IonCol>
           </IonRow>
 
