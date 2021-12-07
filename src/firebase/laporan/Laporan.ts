@@ -28,6 +28,7 @@ export const addNewLaporan = async ({
   loc,
   damageRate,
   observationStatus,
+  url,
   userID,
 }: Omit<laporanType, 'id' | 'createdAt'>) => {
   try {
@@ -40,6 +41,7 @@ export const addNewLaporan = async ({
       loc,
       damageRate,
       observationStatus,
+      url,
       userID,
       createdAt: Date.now(),
     });

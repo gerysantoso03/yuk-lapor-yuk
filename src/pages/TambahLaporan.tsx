@@ -28,6 +28,14 @@ import { useContext, useState } from 'react';
 import { addNewLaporan, getUserLaporan } from '../firebase/laporan/Laporan';
 import { location } from 'ionicons/icons';
 import { Geolocation } from '@ionic-native/geolocation';
+// import { storage } from '../firebase/firebaseConfig';
+import {
+  ref,
+  getDownloadURL,
+  getStorage,
+  uploadBytesResumable,
+  uploadString,
+} from 'firebase/storage';
 
 import axios from 'axios';
 import { useHistory } from 'react-router';
@@ -37,6 +45,9 @@ const TambahLaporan = () => {
   const [title, setTitle] = useState<string>('');
   const [desc, setDesc] = useState<string>('');
   const [loc, setLoc] = useState<string>('');
+  const [imageFile, setImage] = useState<any>();
+  const [imageName, setImageName] = useState('');
+  const [url, setURL] = useState('');
   const [damageRate, setDamageRate] = useState<'Ringan' | 'Sedang' | 'Parah'>(
     'Ringan'
   );
@@ -61,6 +72,43 @@ const TambahLaporan = () => {
     }
   };
 
+  const GetInputImage = async (e: any) => {
+    const file = e.target.files[0];
+    setImageName(e.target.files[0].name); // get image name
+    console.log('ini nama file', imageName)
+
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = () => {
+      // get the blob of the image:
+      let blob: Blob = new Blob([new Uint8Array(reader.result as ArrayBuffer)]); // get image as blob type
+      setImage(blob);
+
+      // create blobURL, such that we could use it in an image element:
+      let blobURL: string = URL.createObjectURL(blob); // get url of blob image
+
+      // processing upload image
+      const storage = getStorage();
+      const storageRef = ref(
+        storage,
+        `/images/${
+          imageName
+        }`
+      );
+      const uploadTask = uploadBytesResumable(storageRef, imageFile);
+      uploadTask.on('state_changed', console.log, console.error, () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log('success upload');
+          setURL(url);
+        });
+      });
+    };
+
+    reader.onerror = (error) => {
+      console.log(error);
+    };
+  };
+
   return (
     <IonPage>
       <IonHeader className="ion-no-border">
@@ -75,12 +123,13 @@ const TambahLaporan = () => {
         <IonGrid className="tambah__container">
           <IonCol>
             <IonCard className="tambah-card__image">
-              <IonImg className="img-insert" src={ImgPlaceholder} />
+              <IonImg className="img-insert" src={url ?? ImgPlaceholder} />
             </IonCard>
           </IonCol>
 
           <IonRow className="tambah-wrapper__button">
             <IonCol className="ion-text-left">
+              <input type="file" onChange={GetInputImage} />
               <IonButton
                 className="width-50 button-ylw tambah__button"
                 color="warning"
@@ -220,8 +269,12 @@ const TambahLaporan = () => {
                       loc,
                       damageRate,
                       observationStatus: 'Observasi',
+                      url,
                       userID: user.uid,
                     });
+
+                    console.log(url);
+
 
                     // Fetch new updated data
                     const laporan = await getUserLaporan(user.uid);

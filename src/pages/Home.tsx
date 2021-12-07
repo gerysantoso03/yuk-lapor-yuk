@@ -136,7 +136,7 @@ const Home = () => {
               <IonCol>
                 <IonCard className="home__card">
                   <IonLabel className="dilaporkan">DILAPORKAN</IonLabel>
-                  <IonImg src={Jalan} />
+                  <IonImg src={laporanData.url ?? Jalan} />
 
                   <IonCardHeader>
                     <IonCardTitle>{laporanData.title}</IonCardTitle>
