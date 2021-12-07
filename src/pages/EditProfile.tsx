@@ -14,21 +14,26 @@ import {
   IonInput,
   IonBackButton,
   IonButtons,
+  useIonToast,
 } from '@ionic/react';
-import { exit, map, newspaper } from 'ionicons/icons';
-import { useContext } from 'react';
-import { logout } from '../firebase/auth/Auth';
-import { useHistory } from 'react-router';
+import { map } from 'ionicons/icons';
+import { useContext, useState } from 'react';
 
 /* Import Assets */
-import lalisa from '../assets/images/lalisa.png';
 import '../assets/css/Profile.css';
 import '../assets/css/EditProfile.css';
 import { AppContext } from '../context/AppContext';
+import { getUserData, updateUserProfile } from '../firebase/auth/Auth';
+import { useHistory } from 'react-router';
 
 const EditProfile = () => {
-  const { userIsAdmin, userData } = useContext(AppContext);
+  const { userIsAdmin, user, setUserData } = useContext(AppContext);
+
+  const [fullname, setFullname] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+
   const history = useHistory();
+  const [present, dismiss] = useIonToast();
 
   return (
     <IonPage className="profile">
@@ -46,42 +51,71 @@ const EditProfile = () => {
       <IonContent>
         <IonGrid className="profile__bio">
           <IonRow>
-            <IonCol className="profile__image">
-              <IonAvatar className="profile__avatar">
-                <img src={lalisa} alt="Profile" />
-              </IonAvatar>
+            <IonCol>
+              <IonInput
+                name="Fullname"
+                placeholder="Fullname"
+                type="text"
+                className="profile-edit"
+                onIonInput={(e: any) => setFullname(e.target.value)}
+              ></IonInput>
             </IonCol>
           </IonRow>
 
-          <IonInput
-            name="Username"
-            placeholder="Email"
-            type="text"
-            className="profile-edit"
-          ></IonInput>
-          <IonInput
-            name="name"
-            placeholder={userData?.fullname}
-            type="text"
-            className="profile-edit"
-          ></IonInput>
+          <IonRow>
+            <IonCol>
+              <div className="input__wrapper">
+                <IonInput
+                  name="address"
+                  placeholder="Location"
+                  type="text"
+                  className="profile-edit"
+                  onIonInput={(e: any) => setAddress(e.target.value)}
+                ></IonInput>
 
-          <div className="input__wrapper">
-            <IonInput
-              name="address"
-              placeholder={userData?.address}
-              type="text"
-              className="profile-edit"
-            ></IonInput>
-
-            <IonButton slot="start" className="input__button">
-              <IonIcon icon={map} />
-            </IonButton>
-          </div>
+                <IonButton slot="start" className="input__button">
+                  <IonIcon icon={map} />
+                </IonButton>
+              </div>
+            </IonCol>
+          </IonRow>
 
           <IonRow>
             <IonCol>
-              <IonButton color="warning" className="button__orange">
+              <IonButton
+                onClick={async () => {
+                  try {
+                    if (!user) {
+                      throw new Error('User must be exists on this point ');
+                    }
+
+                    // Update user profile data
+                    await updateUserProfile(user?.uid, {
+                      fullname,
+                      address,
+                    });
+
+                    // Fetch new user data
+                    const data = await getUserData(user.uid);
+
+                    // Set new user data to context
+                    setUserData(data);
+
+                    // Set back form to inital value
+                    setFullname('');
+                    setAddress('');
+
+                    // Success update new user
+                    present('Success to update new user', 2000);
+
+                    history.replace('/user/profile');
+                  } catch (error) {
+                    present('Failed to update user', 2000);
+                  }
+                }}
+                color="warning"
+                className="button__orange"
+              >
                 <IonLabel className="button__orange-label">Simpan</IonLabel>
               </IonButton>
             </IonCol>

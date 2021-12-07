@@ -52,6 +52,8 @@ const PopoverList = ({
   const resetButton = () => {
     setTingRus(0);
     setStatTKP(0);
+    setObservasi(null);
+    setKerusakan(null);
   };
 
   const toggleTingRus = (index: number) => {
@@ -81,6 +83,7 @@ const PopoverList = ({
           onClick={() => {
             toggleTingRus(1);
             setKerusakan('Ringan');
+            setObservasi(null);
           }}
         >
           Rusak Ringan
@@ -94,6 +97,7 @@ const PopoverList = ({
           onClick={() => {
             toggleTingRus(2);
             setKerusakan('Sedang');
+            setObservasi(null);
           }}
         >
           Rusak Sedang
@@ -107,6 +111,7 @@ const PopoverList = ({
           onClick={() => {
             toggleTingRus(3);
             setKerusakan('Berat');
+            setObservasi(null);
           }}
         >
           Rusak Parah
@@ -124,6 +129,7 @@ const PopoverList = ({
           onClick={() => {
             toggleStatTKP(1);
             setObservasi('Observasi');
+            setKerusakan(null);
           }}
         >
           Tahap Observasi
@@ -137,6 +143,7 @@ const PopoverList = ({
           onClick={() => {
             toggleStatTKP(2);
             setObservasi('Perbaiki');
+            setKerusakan(null);
           }}
         >
           Tahap Perbaiki
@@ -150,6 +157,7 @@ const PopoverList = ({
           onClick={() => {
             toggleStatTKP(3);
             setObservasi('Selesai');
+            setKerusakan(null);
           }}
         >
           Selesai Diperbaiki
@@ -225,13 +233,10 @@ const Home = () => {
 
       <IonContent fullscreen>
         <IonGrid>
-          {(kerusakan || observasi) &&
+          {/* Filter By Tingkat Kerusakan */}
+          {kerusakan &&
             userLaporan
-              .filter(
-                (fil) =>
-                  fil.damageRate === kerusakan &&
-                  fil.observationStatus === observasi
-              )
+              .filter((fil) => fil.damageRate === kerusakan)
               .map((laporanData) => (
                 <IonRow
                   key={laporanData.id}
@@ -272,7 +277,53 @@ const Home = () => {
                 </IonRow>
               ))}
 
+          {/* Filter By Observation Status */}
+          {observasi &&
+            userLaporan
+              .filter((fil) => fil.observationStatus === observasi)
+              .map((laporanData) => (
+                <IonRow
+                  key={laporanData.id}
+                  onClick={() => {
+                    history.push(`/user/laporanku/${laporanData.id}`);
+                  }}
+                >
+                  <IonCol>
+                    <IonCard className="home__card">
+                      {laporanData.observationStatus === 'Observasi' ? (
+                        <IonLabel className="dilaporkan">
+                          Tahap Observasi
+                        </IonLabel>
+                      ) : laporanData.observationStatus === 'Perbaiki' ? (
+                        <IonLabel className="perbaikan">
+                          Tahap Perbaikan
+                        </IonLabel>
+                      ) : (
+                        <IonLabel className="selesai">
+                          Selesai Perbaikan
+                        </IonLabel>
+                      )}
+                      <IonImg src={Jalan} />
+
+                      <IonCardHeader>
+                        <IonCardTitle>{laporanData.title}</IonCardTitle>
+                        <IonCardSubtitle>
+                          Tingkat Kerusakan : {laporanData.damageRate}
+                        </IonCardSubtitle>
+                      </IonCardHeader>
+
+                      <IonCardContent className="home-content__container">
+                        <IonIcon icon={location} className="home__icon" />
+                        <p className="home__address">{laporanData.loc}</p>
+                      </IonCardContent>
+                    </IonCard>
+                  </IonCol>
+                </IonRow>
+              ))}
+
+          {/* Data not filtered */}
           {kerusakan === null &&
+            observasi === null &&
             userLaporan.map((laporanData) => (
               <IonRow
                 key={laporanData.id}
