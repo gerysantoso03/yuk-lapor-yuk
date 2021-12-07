@@ -1,38 +1,38 @@
 .register {
-	--ion-background-color: linear-gradient(360deg, #4437F9 0%, #8474FF 100%);
+  --ion-background-color: linear-gradient(360deg, #4437f9 0%, #8474ff 100%);
 }
 
 .register__header {
-	color: #fff;
-	font-size: 2.5rem;
+  color: #fff;
+  font-size: 2.5rem;
 }
 
 .register .top-bubble {
-	width: 20rem;
-	height: 20rem;
-	position: absolute;
-	background: linear-gradient(360deg, #4437F9 0%, #8474FF 100%);
-	transform: rotate(179.65deg);
-	border-radius: 76px;
-	border-radius: 50%;
-	top: -5rem;
-	right: -5rem;
+  width: 20rem;
+  height: 20rem;
+  position: absolute;
+  background: linear-gradient(360deg, #4437f9 0%, #8474ff 100%);
+  transform: rotate(179.65deg);
+  border-radius: 76px;
+  border-radius: 50%;
+  top: -5rem;
+  right: -5rem;
 }
 
 .register-title {
-	margin-left: 2rem;
-	position: absolute;
-	height: calc( 40vh - 56px);
-	display: flex;
-	align-items: center;
+  margin-left: 2rem;
+  position: absolute;
+  height: calc(40vh - 56px);
+  display: flex;
+  align-items: center;
 }
 
 .register__title-text {
-	line-height: 3rem;
+  line-height: 3rem;
 }
 
 .register__wrapper {
-	position: relative;
+  position: relative;
 }
 
 .register-container {
@@ -41,9 +41,9 @@
   position: absolute;
   width: 100%;
   height: 60vh;
-	bottom: 0;
-	padding: 4rem;
-	overflow-y: scroll;
+  bottom: 0;
+  padding: 4rem;
+  overflow-y: scroll;
 }
 
 .register-input {
@@ -52,47 +52,63 @@
   border-radius: 5px;
   width: 100%;
   box-shadow: 1px 3px 15px 0.001px #88888834;
-	margin-bottom: 2rem;
-	--padding-top: 2rem;
-	--padding-bottom: 2rem;
-	--padding-start: 2rem;
-	--padding-end: 2rem;
-	--color: var(--clr-black);
+  margin-bottom: 2rem;
+  --padding-top: 2rem;
+  --padding-bottom: 2rem;
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  --color: var(--clr-black);
 }
 
 .input__wrapper {
-	display: flex;
+  display: flex;
 }
 
 .input__wrapper .input__button {
-	width: 53px;
-	height: 53px;
-	--background: var(--clr-orange);
-	--box-shadow: 1px 3px 15px 0.001px #88888834;
+  width: 53px;
+  height: 53px;
+  --background: var(--clr-orange);
+  --box-shadow: 1px 3px 15px 0.001px #88888834;
 }
 
 .register__arrow {
-	width: 50px !important;
-	--box-shadow: none;
+  width: 50px !important;
+  --box-shadow: none;
 }
 
 .button__register {
-	margin: 2rem 0;
-	width: 100% !important;
-	--padding-top: 2rem;
-	--padding-bottom: 2rem;
-	--padding-start: 2rem;
-	--padding-end: 2rem;
-  --border-radius: .5rem !important;
-	--box-shadow: 1px 3px 15px 0.001px #88888834;
+  margin: 2rem 0;
+  width: 100% !important;
+  --padding-top: 2rem;
+  --padding-bottom: 2rem;
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  --border-radius: 0.5rem !important;
+  --box-shadow: 1px 3px 15px 0.001px #88888834;
+}
+
+.button__upload {
+  margin: 2rem 0;
+  width: 100% !important;
+  --padding-top: 2rem;
+  --padding-bottom: 2rem;
+  --padding-start: 2rem;
+  --padding-end: 2rem;
+  --border-radius: 5px !important;
+  --box-shadow: 1px 3px 15px 0.001px #88888834;
+  --background: #6352ff;
 }
 
 .register__link {
-	color: var(--clr-black);
+  color: var(--clr-black);
 }
 
 .register__link a {
-	color: var(--clr-black);
-	text-decoration: none;
-	font-weight: 600;
+  color: var(--clr-black);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.insert-photo {
+  color: gray;
 }
