@@ -3,7 +3,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
-import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
+import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { app, db } from '../firebaseConfig';
 import { loginType, registerType } from '../../types/AuthTypes';
 import { userType } from '../../types/UserTypes';
