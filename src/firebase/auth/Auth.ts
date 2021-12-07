@@ -3,7 +3,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
-import { setDoc, doc, getDoc } from 'firebase/firestore';
+import { setDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { app, db } from '../firebaseConfig';
 import { loginType, registerType } from '../../types/AuthTypes';
 import { userType } from '../../types/UserTypes';
@@ -97,5 +97,26 @@ export const getCorrespondenUser = async (laporanId: string) => {
     return userData.data() as userType;
   } catch (error) {
     throw new Error('Cannot get correspond user');
+  }
+};
+
+/**
+ * Update user profile data
+ * @param {string} userId
+ * @returns Updated user data
+ */
+export const updateUserProfile = async (
+  userId: string,
+  { fullname, address }: { fullname: string; address: string }
+) => {
+  try {
+    const userRef = doc(db(), 'users', userId);
+
+    await updateDoc(userRef, {
+      fullname,
+      address,
+    });
+  } catch (error) {
+    throw new Error('Cant update user data!');
   }
 };
