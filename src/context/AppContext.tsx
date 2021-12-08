@@ -46,7 +46,11 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         console.log('App Context working, current user is', user.uid);
 
         setUser(user);
-        setIsUserAdmin(data.isAdmin);
+        if (data.isAdmin) {
+          setIsUserAdmin(data.isAdmin);
+        } else {
+          setIsUserAdmin(false);
+        }
         setUserData(data);
       } else {
         console.log('App Context working, user is now null');

@@ -33,8 +33,8 @@ export const registerUser = async ({
   password,
   fullname,
   address,
-  isAdmin,
   urlImage,
+  isAdmin,
 }: Omit<registerType, 'userId'>) => {
   try {
     const auth = getAuth(app());
@@ -45,8 +45,8 @@ export const registerUser = async ({
         userId: res.user.uid,
         fullname: fullname,
         address: address,
-        isAdmin: isAdmin,
         urlImage: urlImage,
+        isAdmin: isAdmin,
       });
 
       console.log(data);
