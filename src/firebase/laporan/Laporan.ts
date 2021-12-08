@@ -46,7 +46,7 @@ export const addNewLaporan = async ({
       createdAt: Date.now(),
     });
 
-    return laporanData;
+    return true;
   } catch (error) {
     console.error(error);
   }

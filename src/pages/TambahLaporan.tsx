@@ -238,10 +238,13 @@ const TambahLaporan = () => {
                   // Add new laporan data to DB
                   try {
                     // Validate data
-                    if (title === '' || desc === '' || loc === '') {
-                      throw new Error(
-                        'Title, Desc, or location must not be empty !!'
-                      );
+                    if (
+                      title === '' ||
+                      desc === '' ||
+                      loc === '' ||
+                      url === ''
+                    ) {
+                      throw new Error('All input must not be empty !!');
                     }
 
                     if (!user) {
@@ -250,7 +253,7 @@ const TambahLaporan = () => {
                       );
                     }
 
-                    await addNewLaporan({
+                    const successAddLaporan = await addNewLaporan({
                       title,
                       desc,
                       loc,
@@ -260,27 +263,29 @@ const TambahLaporan = () => {
                       userID: user.uid,
                     });
 
-                    console.log(url);
+                    if (successAddLaporan) {
+                      // Fetch new updated data
+                      const laporan = await getUserLaporan(user.uid);
 
-                    // Fetch new updated data
-                    const laporan = await getUserLaporan(user.uid);
+                      // Set new laporan data to context
+                      setLaporan(laporan);
 
-                    // Set new laporan data to context
-                    setLaporan(laporan);
+                      // Set form back to initial value
+                      setTitle('');
+                      setDesc('');
+                      setLoc('');
+                      setDamageRate('Ringan');
 
-                    // Set form back to initial value
-                    setTitle('');
-                    setDesc('');
-                    setLoc('');
-                    setDamageRate('Ringan');
+                      // Set success toast
+                      present('Success to add new laporan data', 2000);
 
-                    // Set success toast
-                    present('Success to add new laporan data', 2000);
-
-                    // Return back to laporanku page
-                    history.replace('/user/laporanku');
-                  } catch {
-                    present('Failed to add new laporan data !!', 2000);
+                      // Return back to laporanku page
+                      history.replace('/user/laporanku');
+                    } else {
+                      present('Failed to add new laporan data !!', 2000);
+                    }
+                  } catch (error) {
+                    present(`${error}`, 2000);
                   }
                 }}
                 className="width-50 button-ylw tambah__btn-action"
