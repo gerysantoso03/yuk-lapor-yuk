@@ -21,17 +21,16 @@ import { camera, map } from 'ionicons/icons';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { registerUser } from '../firebase/auth/Auth';
-
 import {
   ref,
   getDownloadURL,
   getStorage,
   uploadBytesResumable,
-  uploadString,
 } from 'firebase/storage';
 
 // Import Styles
 import '../assets/css/Register.css';
+import ImgPlaceholder from '../assets/images/placeholder-image.png';
 
 const Register = () => {
   const [email, setEmail] = useState<string>('');
@@ -147,7 +146,7 @@ const Register = () => {
                   <IonCard className="tambah-card__image">
                     <IonImg
                       className="img-insert"
-                      src={urlImage}
+                      src={urlImage ? urlImage : ImgPlaceholder}
                     />
                   </IonCard>
                   <input type="file" onChange={GetInputImage} />

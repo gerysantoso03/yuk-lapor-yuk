@@ -31,7 +31,7 @@
 }
 
 .tambah-wrapper__button {
-  padding: 0 .6rem;
+  padding: 0 0.6rem;
   margin-bottom: 2rem;
 }
 
@@ -51,4 +51,9 @@
 
 .tambah__btn-action {
   --box-shadow: 1px 3px 15px 0.001px #88888834;
+}
+
+.input-photo {
+  width: 100%;
+  cursor: pointer;
 }

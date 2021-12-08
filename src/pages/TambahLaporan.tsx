@@ -28,18 +28,15 @@ import { useContext, useState } from 'react';
 import { addNewLaporan, getUserLaporan } from '../firebase/laporan/Laporan';
 import { location } from 'ionicons/icons';
 import { Geolocation } from '@ionic-native/geolocation';
-// import { storage } from '../firebase/firebaseConfig';
+import { useHistory } from 'react-router';
+import { AppContext } from '../context/AppContext';
 import {
   ref,
   getDownloadURL,
   getStorage,
   uploadBytesResumable,
-  uploadString,
 } from 'firebase/storage';
-
 import axios from 'axios';
-import { useHistory } from 'react-router';
-import { AppContext } from '../context/AppContext';
 
 const TambahLaporan = () => {
   const [title, setTitle] = useState<string>('');
@@ -75,7 +72,7 @@ const TambahLaporan = () => {
   const GetInputImage = async (e: any) => {
     const file = e.target.files[0];
     setImageName(e.target.files[0].name); // get image name
-    console.log('ini nama file', imageName)
+    console.log('ini nama file', imageName);
 
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
@@ -89,12 +86,7 @@ const TambahLaporan = () => {
 
       // processing upload image
       const storage = getStorage();
-      const storageRef = ref(
-        storage,
-        `/images/${
-          imageName
-        }`
-      );
+      const storageRef = ref(storage, `/images/${imageName}`);
       const uploadTask = uploadBytesResumable(storageRef, imageFile);
       uploadTask.on('state_changed', console.log, console.error, () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
@@ -123,18 +115,23 @@ const TambahLaporan = () => {
         <IonGrid className="tambah__container">
           <IonCol>
             <IonCard className="tambah-card__image">
-              <IonImg className="img-insert" src={url ?? ImgPlaceholder} />
+              <IonImg className="img-insert" src={url ? url : ImgPlaceholder} />
             </IonCard>
           </IonCol>
 
           <IonRow className="tambah-wrapper__button">
             <IonCol className="ion-text-left">
-              <input type="file" onChange={GetInputImage} />
               <IonButton
                 className="width-50 button-ylw tambah__button"
                 color="warning"
+                onChange={GetInputImage}
               >
-                Ambil Foto
+                <input
+                  type="file"
+                  placeholder="Ambil Foto"
+                  className="input-photo"
+                  onChange={GetInputImage}
+                />
               </IonButton>
             </IonCol>
             <IonCol className="ion-text-right">
@@ -274,7 +271,6 @@ const TambahLaporan = () => {
                     });
 
                     console.log(url);
-
 
                     // Fetch new updated data
                     const laporan = await getUserLaporan(user.uid);

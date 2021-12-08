@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from '@firebase/firestore';
-import { ref, uploadString, getDownloadURL, getStorage } from '@firebase/storage';
+import { getStorage } from '@firebase/storage';
 
 const config = {
   apiKey: 'AIzaSyB3c-kYK7XOx4kiD02-mhAnGUO-EhGovdA',
@@ -15,5 +15,4 @@ const config = {
 
 export const app = () => initializeApp(config);
 export const db = () => getFirestore(app());
-
 export const storage = () => getStorage(app(), 'yuk-lapor-68add.appspot.com');
