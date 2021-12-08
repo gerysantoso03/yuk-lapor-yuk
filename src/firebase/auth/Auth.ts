@@ -116,6 +116,8 @@ export const updateUserProfile = async (
       fullname,
       address,
     });
+
+    return true;
   } catch (error) {
     throw new Error('Cant update user data!');
   }

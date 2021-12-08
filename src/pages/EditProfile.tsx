@@ -85,32 +85,43 @@ const EditProfile = () => {
               <IonButton
                 onClick={async () => {
                   try {
+                    // Validate input
+                    if (fullname === '') {
+                      throw new Error('Fullname must not be empty !!');
+                    }
+                    if (address === '') {
+                      throw new Error('Address must not be empty !!');
+                    }
+
+                    // Check if user is exists or not
                     if (!user) {
-                      throw new Error('User must be exists on this point ');
+                      throw new Error('User must be exists at this point ');
                     }
 
                     // Update user profile data
-                    await updateUserProfile(user?.uid, {
+                    const successUpdate = await updateUserProfile(user?.uid, {
                       fullname,
                       address,
                     });
 
-                    // Fetch new user data
-                    const data = await getUserData(user.uid);
+                    if (successUpdate) {
+                      // Fetch new user data
+                      const data = await getUserData(user.uid);
 
-                    // Set new user data to context
-                    setUserData(data);
+                      // Set new user data to context
+                      setUserData(data);
 
-                    // Set back form to inital value
-                    setFullname('');
-                    setAddress('');
+                      // Success update new user
+                      present('Success to update new user', 2000);
 
-                    // Success update new user
-                    present('Success to update new user', 2000);
-
-                    history.replace('/user/profile');
+                      // Back to profile page
+                      history.replace('/user/profile');
+                    } else {
+                      // Make failed toast
+                      present('Failed to update user data !!', 2000);
+                    }
                   } catch (error) {
-                    present('Failed to update user', 2000);
+                    present(`${error}`, 2000);
                   }
                 }}
                 color="warning"
