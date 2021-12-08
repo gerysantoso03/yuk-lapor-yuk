@@ -135,11 +135,7 @@ const Register = () => {
               </IonCard>
 
               <div className="upload-btn-wrapper">
-                <IonButton
-                  expand="block"
-                  className="button__upload"
-                  // color="primary"
-                >
+                <IonButton expand="block" className="button__upload">
                   <IonIcon slot="start" icon={camera} />
                   <IonLabel>Insert Profile Picture</IonLabel>
                 </IonButton>
@@ -201,8 +197,19 @@ const Register = () => {
                 className="button__register"
                 onClick={async () => {
                   try {
+                    // Validate input
+                    if (
+                      email === '' ||
+                      password === '' ||
+                      fullname === '' ||
+                      address === '' ||
+                      urlImage === ''
+                    ) {
+                      throw new Error('All input form must not be empty !!');
+                    }
+
                     // Regist new user data
-                    await registerUser({
+                    const newUserData = await registerUser({
                       email,
                       password,
                       fullname,
@@ -211,11 +218,18 @@ const Register = () => {
                       urlImage,
                     });
 
-                    present('Success to regist new user', 2000);
+                    if (newUserData) {
+                      // If there is current registered user, show success toast
+                      present('Success to regist new user', 2000);
 
-                    h.replace('login');
+                      // Send to login page
+                      h.replace('/login');
+                    } else {
+                      // If register failed, set failed toast
+                      present('Failed to register new user !!', 2000);
+                    }
                   } catch (error) {
-                    present('Failed to regist new user', 2000);
+                    present(`${error}`, 2000);
                   }
                 }}
               >

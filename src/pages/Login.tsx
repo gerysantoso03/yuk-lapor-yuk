@@ -62,6 +62,7 @@ const Login = () => {
                 placeholder="Email"
                 type="text"
                 className="login-input"
+                value={email}
                 onIonInput={(e: any) => setEmail(e.target.value)}
               ></IonInput>
               <IonInput
@@ -69,6 +70,7 @@ const Login = () => {
                 placeholder="Password"
                 type="password"
                 className="login-input"
+                value={password}
                 onIonInput={(e: any) => setPassword(e.target.value)}
               ></IonInput>
             </IonCol>
@@ -78,21 +80,31 @@ const Login = () => {
               <IonButton
                 onClick={async () => {
                   try {
+                    // Validate input
+                    if (email === '') {
+                      throw new Error('Email must not be empty !!');
+                    }
+
+                    if (password === '') {
+                      throw new Error('Password must not be empty !!');
+                    }
+
                     // Login to firebase authentication
-                    await loginUser({ email, password });
+                    const loggedUserId = await loginUser({ email, password });
 
-                    // Set success toast
-                    present('Login success !!', 2000);
+                    if (loggedUserId) {
+                      // Set success toast
+                      present('Login success !!', 2000);
 
-                    // Set form back to initial value
-                    setEmail('');
-                    setPassword('');
-
-                    // Back to home page
-                    history.replace('/user/home');
+                      // Back to home page
+                      history.replace('/user/home');
+                    } else {
+                      // Set failed login toast
+                      present('Invalid email or password', 2000);
+                    }
                   } catch (error) {
                     // Set failed toast
-                    present('Login success !!', 2000);
+                    present(`${error}`, 2000);
                   }
                 }}
                 color="warning"
