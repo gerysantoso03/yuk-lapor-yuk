@@ -58,8 +58,8 @@ const Login = () => {
           <IonRow className="ion-align-items-center ion-justify-content-center">
             <IonCol size="12">
               <IonInput
-                name="Username"
-                placeholder="Username"
+                name="Email"
+                placeholder="Email"
                 type="text"
                 className="login-input"
                 onIonInput={(e: any) => setEmail(e.target.value)}

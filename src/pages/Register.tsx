@@ -107,8 +107,8 @@ const Register = () => {
           <IonRow class="ion-align-items-center ion-justify-content-center">
             <IonCol size="12">
               <IonInput
-                name="Username"
-                placeholder="Username"
+                name="Email"
+                placeholder="Email"
                 type="text"
                 className="register-input"
                 onIonInput={(e: any) => setEmail(e.target.value)}
