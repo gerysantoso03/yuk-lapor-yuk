@@ -58,34 +58,48 @@ const LaporanKu = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              {userLaporan.map((laporan) => (
-                <IonCard
-                  className="porku__card"
-                  key={laporan.id}
-                  onClick={() => {
-                    history.push(`/user/laporanku/${laporan.id}`);
-                  }}
-                >
-                  {laporan.observationStatus === 'Observasi' ? (
-                    <IonLabel className="dilaporkan">Tahap Observasi</IonLabel>
-                  ) : laporan.observationStatus === 'Perbaiki' ? (
-                    <IonLabel className="perbaikan">Tahap Perbaikan</IonLabel>
-                  ) : (
-                    <IonLabel className="selesai">Selesai Perbaikan</IonLabel>
-                  )}
-                  <IonImg src={Jalan} />
-                  <IonCardHeader>
-                    <IonCardTitle>{laporan.title}</IonCardTitle>
-                    <IonCardSubtitle>
-                      Tingkat Kerusakan : {laporan.damageRate}
-                    </IonCardSubtitle>
-                  </IonCardHeader>
-                  <IonCardContent className="porku-content__container">
-                    <IonIcon icon={location} className="porku__icon" />
-                    <p className="porku__address">{laporan.loc}</p>
-                  </IonCardContent>
-                </IonCard>
-              ))}
+              {userLaporan.length > 0 ? (
+                <>
+                  {userLaporan.map((laporan) => (
+                    <IonCard
+                      className="porku__card"
+                      key={laporan.id}
+                      onClick={() => {
+                        history.push(`/user/laporanku/${laporan.id}`);
+                      }}
+                    >
+                      {laporan.observationStatus === 'Observasi' ? (
+                        <IonLabel className="dilaporkan">
+                          Tahap Observasi
+                        </IonLabel>
+                      ) : laporan.observationStatus === 'Perbaiki' ? (
+                        <IonLabel className="perbaikan">
+                          Tahap Perbaikan
+                        </IonLabel>
+                      ) : (
+                        <IonLabel className="selesai">
+                          Selesai Perbaikan
+                        </IonLabel>
+                      )}
+                      <IonImg src={laporan.url ? laporan.url : Jalan} />
+                      <IonCardHeader>
+                        <IonCardTitle>{laporan.title}</IonCardTitle>
+                        <IonCardSubtitle>
+                          Tingkat Kerusakan : {laporan.damageRate}
+                        </IonCardSubtitle>
+                      </IonCardHeader>
+                      <IonCardContent className="porku-content__container">
+                        <IonIcon icon={location} className="porku__icon" />
+                        <p className="porku__address">{laporan.loc}</p>
+                      </IonCardContent>
+                    </IonCard>
+                  ))}
+                </>
+              ) : (
+                <IonTitle color="dark" className="ion-text-center">
+                  BELUM ADA DATA
+                </IonTitle>
+              )}
             </IonCol>
           </IonRow>
         </IonGrid>

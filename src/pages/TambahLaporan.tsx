@@ -42,12 +42,12 @@ const TambahLaporan = () => {
   const [title, setTitle] = useState<string>('');
   const [desc, setDesc] = useState<string>('');
   const [loc, setLoc] = useState<string>('');
-  const [imageFile, setImage] = useState<any>();
-  const [imageName, setImageName] = useState('');
   const [url, setURL] = useState('');
   const [damageRate, setDamageRate] = useState<'Ringan' | 'Sedang' | 'Parah'>(
     'Ringan'
   );
+  const [preview, setPreview] = useState('');
+
   const [present, dismiss] = useIonToast();
   const { user, userIsAdmin, setLaporan } = useContext(AppContext);
   const history = useHistory();
@@ -71,23 +71,21 @@ const TambahLaporan = () => {
 
   const GetInputImage = async (e: any) => {
     const file = e.target.files[0];
-    setImageName(e.target.files[0].name); // get image name
-    console.log('ini nama file', imageName);
+    setPreview(URL.createObjectURL(e.target.files[0]));
 
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
     reader.onload = () => {
       // get the blob of the image:
       let blob: Blob = new Blob([new Uint8Array(reader.result as ArrayBuffer)]); // get image as blob type
-      setImage(blob);
 
       // create blobURL, such that we could use it in an image element:
       let blobURL: string = URL.createObjectURL(blob); // get url of blob image
 
       // processing upload image
       const storage = getStorage();
-      const storageRef = ref(storage, `/images/${imageName}`);
-      const uploadTask = uploadBytesResumable(storageRef, imageFile);
+      const storageRef = ref(storage, `/images/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, blob);
       uploadTask.on('state_changed', console.log, console.error, () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           console.log('success upload');
@@ -118,7 +116,7 @@ const TambahLaporan = () => {
               <IonCard className="wrapper__image-card">
                 <IonImg
                   className="img-insert"
-                  src={url ? url : ImgPlaceholder}
+                  src={preview ? preview : ImgPlaceholder}
                 />
               </IonCard>
 
@@ -129,7 +127,7 @@ const TambahLaporan = () => {
                   // color="primary"
                 >
                   <IonIcon slot="start" icon={camera} />
-                  <IonLabel>Insert Profile Picture</IonLabel>
+                  <IonLabel>Insert Picture</IonLabel>
                 </IonButton>
                 <input type="file" onChange={GetInputImage} />
               </div>

@@ -20,7 +20,7 @@ import {
   IonRadio,
   IonRadioGroup,
   useIonToast,
-  IonModal
+  IonModal,
 } from '@ionic/react';
 
 // Import Assets
@@ -84,7 +84,7 @@ const DetailLaporan = () => {
       </IonHeader>
 
       <IonContent fullscreen class="ion-padding-horizontal">
-        <IonModal isOpen={showModal} cssClass='detail__modal'>
+        <IonModal isOpen={showModal} cssClass="detail__modal">
           <IonItem lines="none">
             <IonCol>
               <IonLabel>Status TKP</IonLabel>
@@ -109,10 +109,13 @@ const DetailLaporan = () => {
           </IonItem>
           <IonButton onClick={() => setShowModal(false)}>Selesai</IonButton>
         </IonModal>
-        
+
         <IonCard className="detail__card-container">
           <IonLabel className="dilaporkan">DILAPORKAN</IonLabel>
-          <IonImg className="report-image" src={Placeholder1} />
+          <IonImg
+            className="report-image"
+            src={detailLaporan?.url ? detailLaporan.url : Placeholder1}
+          />
           <IonCardContent class="ion-padding-horizontal">
             <IonGrid>
               <IonCol class="detail-card">
@@ -149,7 +152,14 @@ const DetailLaporan = () => {
                   <IonRow>
                     <IonGrid>
                       <IonRow class="profile-container">
-                        <IonImg class="profile-photo" src={Placeholder} />
+                        <IonImg
+                          class="profile-photo"
+                          src={
+                            correspondUser?.urlImage
+                              ? correspondUser.urlImage
+                              : Placeholder
+                          }
+                        />
                         <IonCol>
                           <IonRow>
                             <IonText class="reporter-name">

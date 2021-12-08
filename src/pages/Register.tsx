@@ -20,6 +20,7 @@ import {
 import { camera, map } from 'ionicons/icons';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+import { Geolocation } from '@ionic-native/geolocation';
 import { registerUser } from '../firebase/auth/Auth';
 import {
   ref,
@@ -27,6 +28,7 @@ import {
   getStorage,
   uploadBytesResumable,
 } from 'firebase/storage';
+import axios from 'axios';
 
 // Import Styles
 import '../assets/css/Register.css';
@@ -38,32 +40,48 @@ const Register = () => {
   const [fullname, setFullname] = useState<string>('');
   const [address, setAddress] = useState<string>('');
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [imageFile, setImage] = useState<any>();
-  const [imageName, setImageName] = useState('');
   const [urlImage, setURL] = useState('');
+  const [preview, setPreview] = useState('');
   const h = useHistory();
 
   const [present, dismiss] = useIonToast();
 
+  const GetGeolocation = async () => {
+    try {
+      const position = await Geolocation.getCurrentPosition();
+      const endPoint = `https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?prox=${position.coords.latitude}%2C${position.coords.longitude}%2C250&mode=retrieveAddresses&maxresults=1&gen=9&apiKey=FoKp5Q3s6QYpyY09kGHrZ3FZwy2xVJQ12DNWAH5nT-I`;
+      axios
+        .get(endPoint)
+        .then((res) => {
+          setAddress(
+            res.data.Response.View[0].Result[0].Location.Address.Label
+          ); // get address by response
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const GetInputImage = async (e: any) => {
     const file = e.target.files[0];
-    setImageName(e.target.files[0].name); // get image name
-    console.log('ini nama file', imageName);
+    setPreview(URL.createObjectURL(e.target.files[0]));
 
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
     reader.onload = () => {
       // get the blob of the image:
       let blob: Blob = new Blob([new Uint8Array(reader.result as ArrayBuffer)]); // get image as blob type
-      setImage(blob);
 
       // create blobURL, such that we could use it in an image element:
       let blobURL: string = URL.createObjectURL(blob); // get url of blob image
 
       // processing upload image
       const storage = getStorage();
-      const storageRef = ref(storage, `/images/${'profile' + imageName}`);
-      const uploadTask = uploadBytesResumable(storageRef, imageFile);
+      const storageRef = ref(storage, `/images/${'profile' + file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, blob);
       uploadTask.on('state_changed', console.log, console.error, () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           console.log('success upload');
@@ -76,6 +94,9 @@ const Register = () => {
       console.log(error);
     };
   };
+
+  console.log('Preview : ', preview);
+  console.log('URL : ', urlImage);
 
   return (
     <IonPage className="register">
@@ -109,7 +130,7 @@ const Register = () => {
               <IonCard className="wrapper__image-card">
                 <IonImg
                   className="img-insert"
-                  src={urlImage ? urlImage : ImgPlaceholder}
+                  src={preview ? preview : ImgPlaceholder}
                 />
               </IonCard>
 
@@ -126,7 +147,7 @@ const Register = () => {
               </div>
             </IonCol>
           </IonRow>
-          
+
           <IonRow class="ion-align-items-center ion-justify-content-center">
             <IonCol size="12">
               <IonInput
@@ -160,7 +181,13 @@ const Register = () => {
                   onIonInput={(e: any) => setAddress(e.target.value)}
                 ></IonInput>
 
-                <IonButton slot="start" className="input__button">
+                <IonButton
+                  onClick={() => {
+                    GetGeolocation();
+                  }}
+                  slot="start"
+                  className="input__button"
+                >
                   <IonIcon icon={map} />
                 </IonButton>
               </div>

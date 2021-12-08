@@ -259,7 +259,7 @@ const Home = () => {
                           Selesai Perbaikan
                         </IonLabel>
                       )}
-                      <IonImg src={ laporanData.url ?? Jalan} />
+                      <IonImg src={laporanData.url ? laporanData.url : Jalan} />
 
                       <IonCardHeader>
                         <IonCardTitle>{laporanData.title}</IonCardTitle>
@@ -303,7 +303,7 @@ const Home = () => {
                           Selesai Perbaikan
                         </IonLabel>
                       )}
-                      <IonImg src={Jalan} />
+                      <IonImg src={laporanData.url ? laporanData.url : Jalan} />
 
                       <IonCardHeader>
                         <IonCardTitle>{laporanData.title}</IonCardTitle>
@@ -342,7 +342,7 @@ const Home = () => {
                     ) : (
                       <IonLabel className="selesai">Selesai Perbaikan</IonLabel>
                     )}
-                    <IonImg src={Jalan} />
+                    <IonImg src={laporanData.url ? laporanData.url : Jalan} />
 
                     <IonCardHeader>
                       <IonCardTitle>{laporanData.title}</IonCardTitle>
