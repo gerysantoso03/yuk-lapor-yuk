@@ -14,7 +14,7 @@ export const loginUser = async ({ email, password }: loginType) => {
     const auth = getAuth(app());
     const res = await signInWithEmailAndPassword(auth, email, password);
 
-    return res;
+    return res.user.uid;
   } catch (error) {
     console.log(error);
   }
@@ -48,11 +48,9 @@ export const registerUser = async ({
         urlImage: urlImage,
         isAdmin: isAdmin,
       });
-
-      console.log(data);
-
-      return data;
     }
+
+    return res.user.uid;
   } catch (error) {
     console.log(error);
   }
