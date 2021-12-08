@@ -104,6 +104,29 @@ const Register = () => {
         </IonGrid>
 
         <IonGrid className="register-container">
+          <IonRow className="wrapper__image-upload">
+            <IonCol>
+              <IonCard className="wrapper__image-card">
+                <IonImg
+                  className="img-insert"
+                  src={urlImage ? urlImage : ImgPlaceholder}
+                />
+              </IonCard>
+
+              <div className="upload-btn-wrapper">
+                <IonButton
+                  expand="block"
+                  className="button__upload"
+                  // color="primary"
+                >
+                  <IonIcon slot="start" icon={camera} />
+                  <IonLabel>Insert Profile Picture</IonLabel>
+                </IonButton>
+                <input type="file" onChange={GetInputImage} />
+              </div>
+            </IonCol>
+          </IonRow>
+          
           <IonRow class="ion-align-items-center ion-justify-content-center">
             <IonCol size="12">
               <IonInput
@@ -141,25 +164,6 @@ const Register = () => {
                   <IonIcon icon={map} />
                 </IonButton>
               </div>
-              <IonGrid className="tambah__container">
-                <IonCol>
-                  <IonCard className="tambah-card__image">
-                    <IonImg
-                      className="img-insert"
-                      src={urlImage ? urlImage : ImgPlaceholder}
-                    />
-                  </IonCard>
-                  <input type="file" onChange={GetInputImage} />
-                </IonCol>
-              </IonGrid>
-              <IonButton
-                expand="block"
-                className="button__upload"
-                // color="primary"
-              >
-                <IonIcon slot="start" icon={camera} />
-                <IonLabel>Insert Profile Picture</IonLabel>
-              </IonButton>
             </IonCol>
           </IonRow>
 

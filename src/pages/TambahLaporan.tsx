@@ -23,7 +23,7 @@ import {
 // Import Assets
 import '../assets/css/TambahLaporan.css';
 import ImgPlaceholder from '../assets/images/placeholder-image.png';
-
+import { camera } from 'ionicons/icons';
 import { useContext, useState } from 'react';
 import { addNewLaporan, getUserLaporan } from '../firebase/laporan/Laporan';
 import { location } from 'ionicons/icons';
@@ -113,34 +113,26 @@ const TambahLaporan = () => {
 
       <IonContent class="ion-padding-horizontal" fullscreen>
         <IonGrid className="tambah__container">
-          <IonCol>
-            <IonCard className="tambah-card__image">
-              <IonImg className="img-insert" src={url ? url : ImgPlaceholder} />
-            </IonCard>
-          </IonCol>
-
-          <IonRow className="tambah-wrapper__button">
-            <IonCol className="ion-text-left">
-              <IonButton
-                className="width-50 button-ylw tambah__button"
-                color="warning"
-                onChange={GetInputImage}
-              >
-                <input
-                  type="file"
-                  placeholder="Ambil Foto"
-                  className="input-photo"
-                  onChange={GetInputImage}
+          <IonRow className="wrapper__image-upload">
+            <IonCol>
+              <IonCard className="wrapper__image-card">
+                <IonImg
+                  className="img-insert"
+                  src={url ? url : ImgPlaceholder}
                 />
-              </IonButton>
-            </IonCol>
-            <IonCol className="ion-text-right">
-              <IonButton
-                className="width-50 button-blu tambah__button"
-                color="secondary"
-              >
-                Unggah Foto
-              </IonButton>
+              </IonCard>
+
+              <div className="upload-btn-wrapper">
+                <IonButton
+                  expand="block"
+                  className="button__upload"
+                  // color="primary"
+                >
+                  <IonIcon slot="start" icon={camera} />
+                  <IonLabel>Insert Profile Picture</IonLabel>
+                </IonButton>
+                <input type="file" onChange={GetInputImage} />
+              </div>
             </IonCol>
           </IonRow>
 
