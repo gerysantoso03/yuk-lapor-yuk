@@ -13,7 +13,7 @@ This application is built with :
 
 # How to Use
 
-- Clone the repository with `git clone https://github.com/gerysantoso03/yuk-lapor.git`.
+- Clone the repository with `git clone https://github.com/gerysantoso03/yuk-lapor-yuk.git`.
 - Run `npm install` to install all the dependencies.
 - After all dependencies installed, run `ionic serve` to start the application.
 
