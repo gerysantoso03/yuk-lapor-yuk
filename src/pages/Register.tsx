@@ -14,11 +14,21 @@ import {
   IonButtons,
   IonBackButton,
   useIonToast,
+  IonCard,
+  IonImg,
 } from '@ionic/react';
 import { camera, map } from 'ionicons/icons';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { registerUser } from '../firebase/auth/Auth';
+
+import {
+  ref,
+  getDownloadURL,
+  getStorage,
+  uploadBytesResumable,
+  uploadString,
+} from 'firebase/storage';
 
 // Import Styles
 import '../assets/css/Register.css';
@@ -29,9 +39,44 @@ const Register = () => {
   const [fullname, setFullname] = useState<string>('');
   const [address, setAddress] = useState<string>('');
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [imageFile, setImage] = useState<any>();
+  const [imageName, setImageName] = useState('');
+  const [urlImage, setURL] = useState('');
   const h = useHistory();
 
   const [present, dismiss] = useIonToast();
+
+  const GetInputImage = async (e: any) => {
+    const file = e.target.files[0];
+    setImageName(e.target.files[0].name); // get image name
+    console.log('ini nama file', imageName);
+
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = () => {
+      // get the blob of the image:
+      let blob: Blob = new Blob([new Uint8Array(reader.result as ArrayBuffer)]); // get image as blob type
+      setImage(blob);
+
+      // create blobURL, such that we could use it in an image element:
+      let blobURL: string = URL.createObjectURL(blob); // get url of blob image
+
+      // processing upload image
+      const storage = getStorage();
+      const storageRef = ref(storage, `/images/${'profile' + imageName}`);
+      const uploadTask = uploadBytesResumable(storageRef, imageFile);
+      uploadTask.on('state_changed', console.log, console.error, () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log('success upload');
+          setURL(url);
+        });
+      });
+    };
+
+    reader.onerror = (error) => {
+      console.log(error);
+    };
+  };
 
   return (
     <IonPage className="register">
@@ -97,6 +142,17 @@ const Register = () => {
                   <IonIcon icon={map} />
                 </IonButton>
               </div>
+              <IonGrid className="tambah__container">
+                <IonCol>
+                  <IonCard className="tambah-card__image">
+                    <IonImg
+                      className="img-insert"
+                      src={urlImage}
+                    />
+                  </IonCard>
+                  <input type="file" onChange={GetInputImage} />
+                </IonCol>
+              </IonGrid>
               <IonButton
                 expand="block"
                 className="button__upload"
@@ -122,6 +178,7 @@ const Register = () => {
                       fullname,
                       address,
                       isAdmin,
+                      urlImage,
                     });
 
                     present('Success to regist new user', 2000);

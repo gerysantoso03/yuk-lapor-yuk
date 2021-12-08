@@ -259,7 +259,7 @@ const Home = () => {
                           Selesai Perbaikan
                         </IonLabel>
                       )}
-                      <IonImg src={Jalan} />
+                      <IonImg src={ laporanData.url ?? Jalan} />
 
                       <IonCardHeader>
                         <IonCardTitle>{laporanData.title}</IonCardTitle>

@@ -5,6 +5,7 @@ export type registerType = {
   fullname: string;
   address: string;
   isAdmin: boolean;
+  urlImage: string;
 };
 
 export type loginType = {

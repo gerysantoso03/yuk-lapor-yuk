@@ -5,6 +5,7 @@ export type laporanType = {
   loc: string;
   damageRate: string;
   observationStatus: string;
+  url: string;
   userID: string;
   createdAt: number;
 };

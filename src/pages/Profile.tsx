@@ -41,7 +41,7 @@ const Profile = () => {
           <IonRow>
             <IonCol className="profile__image">
               <IonAvatar className="profile__avatar">
-                <img src={lalisa} alt="Profile" />
+                <img src={userData?.urlImage ?? lalisa} alt="Profile" />
               </IonAvatar>
             </IonCol>
           </IonRow>
