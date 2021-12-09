@@ -36,3 +36,4 @@ The following are the contributors involved in project development :
 - [Farrel Irsyad Fanny](https://github.com/Farfan16)
 - [Muhammad Faisal Farhan](https://github.com/uzivurt0)
 - [Kharansyah Tawadu shalam](https://github.com/rans0)
+- [Rido Hendrawan](https://github.com/ridohendrawan)
